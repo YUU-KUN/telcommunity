@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/tailwind.js}"></script>
+</head>
+
+<body>
+    <div class="flex justify-center items-center h-screen w-screen p-7">
+        <!-- Sidebar -->
+        <div
+            class="flex flex-col items-center justify-between bg-white rounded-3xl py-14 w-[154px] shadow shadow-red mr-5 h-full">
+            <div class="flex flex-col items-center justify-start w-full">
+                <div class="p-1 rounded-full bg-gradient-to-b from-red to-orange mb-12">
+                    <img th:src="@{/assets/img/nav-profile.png}" alt="nav-profile">
+                </div>
+
+                <div class="flex flex-col items-center justify-center w-full">
+                    <a href="/" class="w-full py-6">
+                        <img th:src="@{/assets/icon/home.png}" alt="home" class="mx-auto">
+                    </a>
+                    <a th:href="@{/chat}" class="w-full py-6 bg-gradient-to-b from-[#DADADA] to-white">
+                        <img th:src="@{/assets/icon/chat.png}" alt="chat" class="mx-auto">
+                    </a>
+                    <a th:href="@{/channel}" class="w-full py-6">
+                        <img th:src="@{/assets/icon/channel.png}" alt="channel" class="mx-auto">
+                    </a>
+                </div>
+
+            </div>
+            <img src="/assets/icon/logout.png" alt="logout">
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="grid grid-cols-7 gap-5 w-full h-full">
+            <div class="col-span-2 grid grid-rows-5  w-full h-full">
+
+                <!-- Group Card -->
+                <div class="row-span-2 h-full">
+                    <div class="bg-white rounded-3xl p-2 pb-0 shadow shadow-pink h-full">
+                        <div class="flex flex-col items-center justify-start h-full">
+                            <div
+                                class="flex items-center justify-between w-full mb-6 bg-gradient-to-b from-primary to-dark-red px-7 py-3 rounded-full">
+                                <p class="text-white text-20">Groups</p>
+                                <img src="/assets/icon/option.png" alt="option">
+                            </div>
+                            <div class="px-7 w-full">
+                                <!-- Group Card -->
+                                <div class="flex items-center justify-start w-full mb-7">
+                                    <img src="/assets/img/groups/telu.png" alt="telu"
+                                        class="shadow rounded-full mr-2">
+                                    <div class="py-7 rounded-3xl shadow text-center w-full">
+                                        <p class="font-bold text-20">Telkom University</p>
+                                    </div>
+                                </div>
+                                <!-- Group Card -->
+                                <div class="flex items-center justify-start w-full mb-7">
+                                    <img src="/assets/img/groups/himaif.png" alt="himaif"
+                                        class="shadow rounded-full mr-2">
+                                    <div class="py-7 rounded-3xl shadow text-center w-full">
+                                        <p class="font-bold text-20">Fakultas Informatika</p>
+                                    </div>
+                                </div>
+                                <!-- Group Card -->
+                                <div class="flex items-center justify-start w-full mb-7">
+                                    <img src="/assets/img/groups/himaif.png" alt="himaif"
+                                        class="shadow rounded-full mr-2">
+                                    <div class="py-7 rounded-3xl shadow text-center w-full">
+                                        <p class="font-bold text-20">S1 Informatika</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Channel Card -->
+                <div class="row-span-1 h-full">
+
+                    <div class="bg-white rounded-3xl p-2 pb-0 shadow shadow-pink h-full">
+                        <div class="flex flex-col items-center justify-start h-full">
+                            <div
+                                class="flex items-center justify-between w-full mb-6 bg-gradient-to-b from-primary to-dark-red px-7 py-3 rounded-full">
+                                <p class="text-white text-20">Channels</p>
+                                <img src="/assets/icon/option.png" alt="option">
+                            </div>
+                            <div class="grid grid-cols-4 gap-x-4 gap-y-6">
+
+                                <!-- Class Item -->
+                                <div v-for="i in 4" :key="i"
+                                    class="flex flex-col items-center justify-start text-center">
+                                    <div class="bg-gradient-to-b from-orange to-red rounded-full p-[3px] mb-2">
+                                        <img src="../../assets/img/groups/telu.png" alt="telu"
+                                            class="h-[70px] w-[70px]">
+                                    </div>
+                                    <p class="font-medium text-16">PBO IF4505</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Personal Chat Card -->
+                <div class="row-span-2 h-full">
+                    <div class="bg-white rounded-3xl p-2 shadow shadow-pink h-full">
+                        <div class="flex flex-col items-center justify-start h-full">
+                            <div
+                                class="flex items-center justify-between w-full mb-6 bg-gradient-to-b from-primary to-dark-red px-7 py-3 rounded-full">
+                                <p class="text-white text-20">Personal</p>
+                                <img src="/assets/icon/option.png" alt="option">
+                            </div>
+                            <div class="px-7 w-full">
+                                <!-- Group Card -->
+                                <div class="flex items-center justify-start w-full mb-7">
+                                    <img src="/assets/img/groups/telu.png" alt="telu"
+                                        class="shadow rounded-full mr-2">
+                                    <div class="py-7 rounded-3xl shadow text-center w-full">
+                                        <p class="font-bold text-20">[PEY] PRASTI EKO YUNANTO</p>
+                                    </div>
+                                </div>
+                                <!-- Group Card -->
+                                <div class="flex items-center justify-start w-full mb-7">
+                                    <img src="/assets/img/groups/himaif.png" alt="himaif"
+                                        class="shadow rounded-full mr-2">
+                                    <div class="py-7 rounded-3xl shadow text-center w-full">
+                                        <p class="font-bold text-20">Indra Wahyu</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Section -->
+            <div class="col-span-5 h-full">
+                <div class="bg-white rounded-3xl px-10 pt-6 pb-10 shadow shadow-pink h-full">
+                    <div class="flex flex-col items-center justify-between h-full">
+
+                        <!-- Card Header -->
+                        <div
+                            class="flex items-center justify-between w-full mb-6 bg-gradient-to-b from-primary to-dark-red px-6 py-3 rounded-3xl">
+                            <img src="../../assets/img/chats/avatar-1.png" alt="avatar-1" class="mr-6">
+                            <div class="flex flex-col items-start justify-center w-full">
+                                <p class="font-bold text-white text-30">Indra Wahyu</p>
+                                <p class="text-white text-16">Online</p>
+                            </div>
+                            <img src="/assets/icon/option.png" alt="option">
+                        </div>
+
+                        <!-- Chat Section -->
+                        <div class="flex flex-col items-center justify-between w-full">
+                            <div class="bg-main-grey px-7 py-2 rounded-full font-semibold text-16 mb-8">
+                                Today
+                            </div>
+                            <!-- Chat Baloon -->
+                            <div class="self-end mb-10">
+                                <div class="rounded-2xl rounded-tr-none bg-main-grey p-4 mb-1">
+                                    <p>Hi there, How are you?</p>
+                                </div>
+                                <p class="text-right">9.20 AM</p>
+                            </div>
+                            <div class="self-start mb-10">
+                                <div class="rounded-2xl rounded-tl-none bg-[#AA0000] text-white p-4 mb-1">
+                                    <p>I am great, Thanks!</p>
+                                </div>
+                                <p class="text-left">9.23 AM</p>
+                            </div>
+
+                            <!-- Message Input Field -->
+                            <div class="flex items-center justify-between w-full">
+                                <input type="text" placeholder="Enter Your Message"
+                                    class="text-white p-7 bg-[#D96C6C] w-full rounded-3xl mr-4">
+                                <div class="flex items-center justify-center bg-[#D96C6C] h-full p-4 px-6 rounded-2xl">
+                                    <img src="../../assets/icon/send.png" alt="send">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

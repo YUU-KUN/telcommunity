@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telcommunity</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/tailwind.js}"></script>
+    
+</head>
+
+<body>
+    <div class="flex justify-center items-center h-screen w-screen p-7">
+        <img th:src="@{/assets/logo/telu-logo.png}" alt="telu-logo"
+            class="absolute top-0 left-0 z-10 ml-[33px] mt-[33px]">
+        <img th:src="@{/assets/img/bg-login.png}" alt="bg-login" class="w-screen h-screen absolute top-0 left-0 -z-10">
+        <div class="flex flex-col items-center justify-center">
+            <div class="font-bold text-60 text-center text-grey mb-16">
+                <p class="font-bold">Hello!</p>
+                <p class="">Welcome to TelCommunity!</p>
+            </div>
+            <div class="bg-primary w-[666px] rounded-3xl py-24 px-40 font-medium mb-10">
+                <div class="flex flex-col mb-10">
+                    <label for="username" class="mb-8 text-30 text-white">Username</label>
+                    <input id="username" type="text" placeholder="Masukkan username anda"
+                        class="bg-white rounded-lg p-4 text-20">
+                </div>
+                <div class="flex flex-col mb-16">
+                    <label for="password" class="mb-8 text-30 text-white">Password</label>
+                    <input id="password" type="password" placeholder="Masukkan password anda"
+                        class="bg-white rounded-lg p-4 text-20">
+                </div>
+                <button class="bg-primary-grey py-6 w-full rounded-lg text-white">Masuk</button>
+            </div>
+            <p class="text-30">Butuh bantuan?</p>
+        </div>
+    </div>
+</body>
+
+</html>

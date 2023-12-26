@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Channel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/tailwind.js}"></script>
+</head>
+
+<body>
+    <div class="flex justify-center items-center h-screen w-screen p-7">
+        <!-- Sidebar -->
+        <div
+            class="flex flex-col items-center justify-between bg-white rounded-3xl py-14 w-[154px] shadow shadow-red mr-5 h-full">
+            <div class="flex flex-col items-center justify-start w-full">
+                <div class="p-1 rounded-full bg-gradient-to-b from-red to-orange mb-12">
+                    <img th:src="@{/assets/img/nav-profile.png}" alt="nav-profile">
+                </div>
+
+                <div class="flex flex-col items-center justify-center w-full">
+                    <a href="/" class="w-full py-6">
+                        <img th:src="@{/assets/icon/home.png}" alt="home" class="mx-auto">
+                    </a>
+                    <a th:href="@{/chat}" class="w-full py-6">
+                        <img th:src="@{/assets/icon/chat.png}" alt="chat" class="mx-auto">
+                    </a>
+                    <a th:href="@{/channel}" class="w-full py-6 bg-gradient-to-b from-[#DADADA] to-white">
+                        <img th:src="@{/assets/icon/channel.png}" alt="channel" class="mx-auto">
+                    </a>
+                </div>
+
+            </div>
+            <img src="/assets/icon/logout.png" alt="logout">
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="bg-white rounded-3xl shadow shadow-pink h-full w-full px-10 pt-6 pb-10">
+            <div class="flex flex-col items-center justify-start h-full">
+                <!-- Card Header -->
+                <div
+                    class="flex items-center justify-between w-full bg-gradient-to-b from-primary to-dark-red px-6 py-3 rounded-3xl mb-6">
+                    <p class="text-white text-40 font-bold">Channels</p>
+                    <img src="/assets/icon/option.png" alt="option">
+                </div>
+
+                <!-- Filter -->
+                <div class="flex items-center justify-start w-full mb-12">
+                    <div @click="setFilter('class')" class="py-2 px-8 rounded-full mr-4 mb-3"
+                        :class="isFilter('class') ? 'bg-primary text-white' : 'text-primary border border-primary'">
+                        <p class="font-semibold text-24">Kelas</p>
+                    </div>
+                    <div @click="setFilter('ukm')" class="py-2 px-8 rounded-full mr-4 drop-shadow-lg mb-3"
+                        :class="isFilter('ukm') ? 'bg-primary text-white' : 'text-primary border border-primary'">
+                        <p class="font-semibold text-24">UKM</p>
+                    </div>
+                </div>
+
+                <!-- Class Items -->
+                <div v-if="filter == 'class'" class="grid grid-cols-8 gap-24 w-full">
+                    <div v-for="i in 6" :key="i" class="flex flex-col items-center justify-start text-center">
+                        <div
+                            class="bg-gradient-to-b from-orange to-red rounded-full h-[125px] w-[125px] mb-2 flex items-center justify-center">
+                            <img src="/assets/img/groups/telu.png" alt="telu" class="h-[120px] w-[120px]">
+                        </div>
+                        <p class="font-semibold text-20">PBO IF4501</p>
+                    </div>
+                </div>
+
+                <!-- UKM Items -->
+                <div v-if="filter == 'ukm'" class="grid grid-cols-8 gap-24 w-full">
+                    <div v-for="i in 6" :key="i" class="flex flex-col items-center justify-start text-center">
+                        <div
+                            class="bg-gradient-to-b from-orange to-red rounded-full h-[125px] w-[125px] mb-2 flex items-center justify-center">
+                            <img src="/assets/img/channels/alfath.png" alt="alfath"
+                                class="h-[120px] w-[120px]">
+                        </div>
+                        <p class="font-semibold text-20">AL-FATH</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
