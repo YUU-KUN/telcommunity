@@ -20,18 +20,23 @@
                 <p class="font-bold">Hello!</p>
                 <p class="">Welcome to TelCommunity!</p>
             </div>
-            <div class="bg-primary w-[666px] rounded-3xl py-24 px-40 font-medium mb-10">
-                <div class="flex flex-col mb-10">
-                    <label for="username" class="mb-8 text-30 text-white">Username</label>
-                    <input id="username" type="text" placeholder="Masukkan username anda"
-                        class="bg-white rounded-lg p-4 text-20">
+            <div class="flex flex-col items-center justify-center bg-[#D96C6C] w-[666px] rounded-3xl py-9 px-12 font-medium mb-10">
+                <div class="flex items-end justify-center w-full px-7">
+                    <!-- <p th:text="${param.role}"></p> -->
+                    <!-- <p th:if="${#strings.equals(param.role, 'mahasiswa')}">halo</p> -->
+                    <a th:href="@{/login?role=mahasiswa}" th:classappend="${#strings.equals(param.role, 'mahasiswa')} ? 'text-primary text-30' : 'text-grey text-20'" class="bg-white w-full text-center rounded-[20px] rounded-b-none p-4">
+                        Mahasiswa
+                    </a>
+                    <a th:href="@{/login?role=dosen}" th:classappend="${#strings.equals(param.role, 'dosen')} ? 'text-primary text-30' : 'text-grey text-20'" class="bg-white w-full text-center rounded-[20px] rounded-b-none p-4">
+                        Dosen
+                    </a>
                 </div>
-                <div class="flex flex-col mb-16">
-                    <label for="password" class="mb-8 text-30 text-white">Password</label>
-                    <input id="password" type="password" placeholder="Masukkan password anda"
-                        class="bg-white rounded-lg p-4 text-20">
-                </div>
-                <button class="bg-primary-grey py-6 w-full rounded-lg text-white">Masuk</button>
+                <form action="/login" method="post" class="flex flex-col items-center justify-center w-full p-[63px] bg-primary rounded-[30px]">
+                    <p class="text-white font-medium text-30 text-left w-full mb-[86px]">Login</p>
+                    <input autofocus name="username" type="text" placeholder="Username SSO" class="bg-transparent p-4 text-20 border-b-4 border-b-[#FE8787] p-3 w-full text-white mb-[65px] focus:outline-none">
+                    <input name="password" type="password" placeholder="Password" class="bg-transparent p-4 text-20 border-b-4 border-b-[#FE8787] p-3 w-full text-white mb-[81px] focus:outline-none">
+                    <button type="submit" class="bg-white py-6 w-full rounded-lg text-primary font-medium text-30">Masuk</button>
+                </form>
             </div>
             <p class="text-30">Butuh bantuan?</p>
         </div>

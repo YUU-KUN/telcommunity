@@ -5,8 +5,10 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import telcommunity.model.ClassChannel;
 import telcommunity.model.Dosen;
 import telcommunity.model.User;
+import telcommunity.service.ChannelService;
 import telcommunity.service.CustomUserDetailsService;
 import telcommunity.service.DosenService;
 
@@ -18,8 +20,11 @@ public class DosenController {
     @Autowired
     CustomUserDetailsService customUserDetailsService;
 
+    @Autowired
+    ChannelService channelService;
+
     @GetMapping("init-dosen")
-    public void saveOrUpdate() {
+    public void initDosen() {
         User user = new User();
         user.setName("Dosen Indra");
         user.setUsername("dosenindraaa");
@@ -31,6 +36,11 @@ public class DosenController {
         dosen.setNip("1301213133");
         dosen.setKode("DRA");
         dosenService.saveOrUpdate(dosen);
+
+        ClassChannel classChannel = new ClassChannel();
+        classChannel.setClass_name(null);
+        classChannel.setLogo("/assets/img/groups/telu.png");
+        channelService.addClassChannel(classChannel);
 
     }
     

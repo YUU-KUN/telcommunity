@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/tailwind.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+</head>
+
+<body>
+    <div class="flex justify-start items-center h-screen w-screen p-7">
+        <!-- Sidebar -->
+        <div
+            class="flex flex-col items-center justify-between bg-white rounded-3xl py-14 w-[154px] shadow shadow-red mr-5 h-full">
+            <div class="flex flex-col items-center justify-start w-full">
+                <div class="p-1 rounded-full bg-gradient-to-b from-red to-orange mb-12">
+                    <img th:src="@{/assets/img/nav-profile.png}" alt="nav-profile">
+                </div>
+
+                <div class="flex flex-col items-center justify-center w-full">
+                    <a href="/" class="w-full py-6">
+                        <img th:src="@{/assets/icon/home.png}" alt="home" class="mx-auto">
+                    </a>
+                    <a th:href="@{/chat}" class="w-full py-6 bg-gradient-to-b from-[#DADADA] to-white">
+                        <img th:src="@{/assets/icon/chat.png}" alt="chat" class="mx-auto">
+                    </a>
+                    <a th:href="@{/channel?type=class}" class="w-full py-6">
+                        <img th:src="@{/assets/icon/channel.png}" alt="channel" class="mx-auto">
+                    </a>
+                </div>
+
+            </div>
+            <a href="/logout" class="cursor-pointer">
+                <img src="/assets/icon/logout.png" alt="logout">
+            </a>
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="flex items-center justify-center w-full h-full">
+            <div class="col-span-5 h-full w-full">
+                <div class="bg-white rounded-3xl px-10 pt-6 pb-10 shadow shadow-pink h-full">
+                    <div class="flex flex-col items-center justify-start h-full">
+
+                        <!-- Card Header -->
+                        <div
+                            class="flex items-center justify-between w-full mb-6 bg-gradient-to-b from-primary to-dark-red px-6 py-3 rounded-3xl">
+                            <div class="flex flex-col items-start justify-center w-full">
+                                <p class="font-bold text-white text-30">Edit Channels</p>
+                            </div>
+                            <img src="/assets/icon/option.png" alt="option">
+                        </div>
+
+                        <!-- Chat Section -->
+                        <div class="flex flex-col items-center justify-between w-1/2 mx-auto h-full rounded-2xl py-5 px-10 bg-[#F2F2F2]">
+                            <p class="font-bold text-40 mb-10">Channel Setup</p>
+                            <div class="flex items-center justify-start w-full">
+                                <img src="/assets/icon/empty-image.png" alt="">
+                                <input type="text" value="Prasti Eko Yunanto's Channel" class="ml-10 text-[#AFAFAF] w-2/3 bg-transparent outline-none font-bold text-30">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</body>
+
+</html>

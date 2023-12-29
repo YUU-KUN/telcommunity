@@ -20,6 +20,9 @@ public class Ormawa {
     @Column(name = "ormawa_name", nullable = false)
     private String ormawa_name;
 
+    @Column(name = "logo", nullable = false)
+    private String logo;
+
     // private KetuaOrmawa ketua;
 
     // @OneToOne
@@ -40,6 +43,16 @@ public class Ormawa {
     public void setOrmawa_name(String ormawa_name) {
         this.ormawa_name = ormawa_name;
     }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    
 
     // public KetuaOrmawa getKetua() {
     // return ketua;

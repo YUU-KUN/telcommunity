@@ -1,11 +1,13 @@
 package telcommunity.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,6 +29,10 @@ public class Group {
 
     @Column(name = "logo", nullable = false)
     private String logo;
+
+    // GroupChat
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
+    private List<GroupChat> groupChats;
 
     // @ManyToMany(mappedBy = "groups")
     // @JoinTable(name = "group_members", joinColumns = @JoinColumn(name =
@@ -75,5 +81,14 @@ public class Group {
     public void setLogo(String logo) {
         this.logo = logo;
     }
+
+    public List<GroupChat> getGroupChats() {
+        return groupChats;
+    }
+
+    public void setGroupChats(List<GroupChat> groupChats) {
+        this.groupChats = groupChats;
+    }
+    
 
 }

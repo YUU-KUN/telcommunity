@@ -26,13 +26,15 @@
                     <a th:href="@{/chat}" class="w-full py-6">
                         <img th:src="@{/assets/icon/chat.png}" alt="chat" class="mx-auto">
                     </a>
-                    <a th:href="@{/channel}" class="w-full py-6">
+                    <a th:href="@{/channel?type=class}" class="w-full py-6">
                         <img th:src="@{/assets/icon/channel.png}" alt="channel" class="mx-auto">
                     </a>
                 </div>
 
             </div>
-            <img src="/assets/icon/logout.png" alt="logout">
+            <a href="/logout" class="cursor-pointer">
+                <img src="/assets/icon/logout.png" alt="logout">
+            </a>
         </div>
 
         <!-- End Sidebar -->
@@ -49,13 +51,13 @@
                             </div>
                             <div class="px-7 w-full">
                                 <!-- Group Card -->
-                                <div th:each="group : ${groups}" class="flex items-center justify-start w-full mb-7">
-                                    <img th:src="${group.logo}" alt="telu"
-                                        class="shadow rounded-full mr-2">
+                                <a th:href="@{/chat(group_id=${group.getId()})}" th:each="group : ${groups}"
+                                    class="flex items-center justify-start w-full mb-7">
+                                    <img th:src="${group.logo}" alt="telu" class="shadow rounded-full mr-2">
                                     <div class="py-7 rounded-3xl shadow text-center w-full">
                                         <p class="font-bold text-20" th:text="${group.group_name}"></p>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -71,8 +73,7 @@
                             <div class="px-7 w-full">
                                 <!-- Group Card -->
                                 <div class="flex items-center justify-start w-full mb-7">
-                                    <img src="/assets/img/groups/telu.png" alt="telu"
-                                        class="shadow rounded-full mr-2">
+                                    <img src="/assets/img/groups/telu.png" alt="telu" class="shadow rounded-full mr-2">
                                     <div class="py-7 rounded-3xl shadow text-center w-full">
                                         <p class="font-bold text-20">[PEY] PRASTI EKO YUNANTO</p>
                                     </div>
@@ -91,6 +92,7 @@
                 </div>
             </div>
             <div class="col-span-3">
+                <!-- <div class=""> -->
                 <div class="bg-white rounded-3xl shadow shadow-pink h-full p-5">
                     <div class="flex flex-col items-center justify-start h-full">
                         <!-- Header -->
@@ -108,46 +110,53 @@
                                     <hr class="w-full border-2">
                                 </div>
                                 <div class="grid grid-cols-5 gap-x-4 gap-y-6">
+                                    <!-- <p th:text="${username}"></p> -->
 
                                     <!-- Class Item -->
-                                    <div v-for="i in 6" :key="i"
-                                        class="flex flex-col items-center justify-start text-center">
+                                    <a th:href="@{/chat(class_channel_id=${userClassChannel.getClassChannel().getId()})}"
+                                        th:each="userClassChannel : ${userClassChannels}"
+                                        class="flex flex-col items-center justify-start text-center hover:cursor-pointer">
                                         <div class="bg-gradient-to-b from-orange to-red rounded-full p-[3px] mb-2">
-                                            <img src="/assets/img/groups/telu.png" alt="telu"
+                                            <img th:src="${userClassChannel.getClassChannel().getLogo()}" alt=""
                                                 class="h-[70px] w-[70px]">
                                         </div>
-                                        <p class="font-medium text-16">PBO IF4505</p>
-                                    </div>
-                                    <div class="flex flex-col items-center justify-start text-center">
-                                        <div class="bg-gradient-to-b from-orange to-red rounded-full p-[3px] mb-2">
-                                            <div
-                                                class="rounded-full bg-white flex items-center justify-center h-[70px] w-[70px]">
-                                                <img src="/assets/icon/plus.png" alt="plus">
+                                        <p class="font-medium text-16"
+                                            th:text="${userClassChannel.getClassChannel().getClass_name()}"></p>
+                                    </a>
+                                    <a href="/add-class">
+                                        <div
+                                            class="flex flex-col items-center justify-start text-center cursor-pointer">
+                                            <div class="bg-gradient-to-b from-orange to-red rounded-full p-[3px] mb-2">
+                                                <div
+                                                    class="rounded-full bg-white flex items-center justify-center h-[70px] w-[70px]">
+                                                    <img src="/assets/icon/plus.png" alt="plus">
+                                                </div>
                                             </div>
+                                            <p class="font-medium text-16 mx-auto">+ ADD CLASS</p>
                                         </div>
-                                        <p class="font-medium text-16 mx-auto">+ ADD CLASS</p>
-                                    </div>
-
+                                    </a>
                                 </div>
                             </div>
 
                             <!-- Ormawa -->
-                            <div class="w-full">
+                            <div th:if="${user.getRole() == 'MAHASISWA'}" class="w-full">
                                 <div class="w-full mb-6">
                                     <p class="text-secondary-grey font-bold text-24 mx-2">ORMAWA</p>
                                     <hr class="w-full border-2">
                                 </div>
                                 <div class="grid grid-cols-5 gap-x-4 gap-y-6">
                                     <!-- Ormawa Item -->
-                                    <div v-for="i in 1" :key="i"
-                                        class="flex flex-col items-center justify-start text-center">
+                                    <a th:href="@{/chat(ormawa_channel_id=${userOrmawaChannel.getOrmawaChannel().getId()})}"
+                                        th:each="userOrmawaChannel : ${userOrmawaChannels}"
+                                        class="flex flex-col items-center justify-start text-center hover:cursor-pointer">
                                         <div class="bg-gradient-to-b from-orange to-red rounded-full p-[3px] mb-2">
-                                            <img src="/assets/img/channels/alfath.png" alt="alfath"
+                                            <img th:src="${userOrmawaChannel.getOrmawaChannel().getOrmawa().getLogo()}" alt=""
                                                 class="h-[70px] w-[70px]">
                                         </div>
-                                        <p class="font-medium text-16">AL-FATH</p>
-                                    </div>
-                                    <div class="flex flex-col items-center justify-start text-center">
+                                        <p class="font-medium text-16"
+                                            th:text="${userOrmawaChannel.getOrmawaChannel().getChannel_name()}"></p>
+                                    </a>
+                                    <a href="/add-ormawa" class="flex flex-col items-center justify-start text-center">
                                         <div class="bg-gradient-to-b from-orange to-red rounded-full p-[3px] mb-2">
                                             <div
                                                 class="rounded-full bg-white flex items-center justify-center h-[70px] w-[70px]">
@@ -155,7 +164,7 @@
                                             </div>
                                         </div>
                                         <p class="font-medium text-16 mx-auto">+ ORMAWA</p>
-                                    </div>
+                                    </a>
 
                                 </div>
                             </div>

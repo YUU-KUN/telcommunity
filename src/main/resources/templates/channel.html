@@ -32,7 +32,9 @@
                 </div>
 
             </div>
-            <img src="/assets/icon/logout.png" alt="logout">
+            <a href="/logout" class="cursor-pointer">
+                <img src="/assets/icon/logout.png" alt="logout">
+            </a>
         </div>
         <!-- End Sidebar -->
 
@@ -47,37 +49,41 @@
 
                 <!-- Filter -->
                 <div class="flex items-center justify-start w-full mb-12">
-                    <div @click="setFilter('class')" class="py-2 px-8 rounded-full mr-4 mb-3"
-                        :class="isFilter('class') ? 'bg-primary text-white' : 'text-primary border border-primary'">
-                        <p class="font-semibold text-24">Kelas</p>
-                    </div>
-                    <div @click="setFilter('ukm')" class="py-2 px-8 rounded-full mr-4 drop-shadow-lg mb-3"
-                        :class="isFilter('ukm') ? 'bg-primary text-white' : 'text-primary border border-primary'">
-                        <p class="font-semibold text-24">UKM</p>
-                    </div>
+                    <a href="/channel?type=class">
+                        <div class="py-2 px-8 rounded-full mr-4 mb-3"
+                            :class="isFilter('class') ? 'bg-primary text-white' : 'text-primary border border-primary'">
+                            <p class="font-semibold text-24">Kelas</p>
+                        </div>
+                    </a>
+                    <a href="/channel?type=ormawa">
+                        <div class="py-2 px-8 rounded-full mr-4 drop-shadow-lg mb-3"
+                            :class="isFilter('ormawa') ? 'bg-primary text-white' : 'text-primary border border-primary'">
+                            <p class="font-semibold text-24">Ormawa</p>
+                        </div>
+                    </a>
                 </div>
 
                 <!-- Class Items -->
-                <div v-if="filter == 'class'" class="grid grid-cols-8 gap-24 w-full">
-                    <div v-for="i in 6" :key="i" class="flex flex-col items-center justify-start text-center">
+                <div th:if="${#strings.equals(param.type, 'class')}" class="grid grid-cols-8 gap-24 w-full">
+                    <!-- th:href="/join-class/${classChannel.getId()}" -->
+                    <a th:href="@{/join-class(class_id=${classChannel.getId()})}" th:each="classChannel : ${classChannels}" class="flex flex-col items-center justify-start text-center cursor-pointer">
                         <div
                             class="bg-gradient-to-b from-orange to-red rounded-full h-[125px] w-[125px] mb-2 flex items-center justify-center">
-                            <img src="/assets/img/groups/telu.png" alt="telu" class="h-[120px] w-[120px]">
+                            <img th:src="${classChannel.getLogo()}" th:alt="${classChannel.getClass_name()}" class="h-[120px] w-[120px]">
                         </div>
-                        <p class="font-semibold text-20">PBO IF4501</p>
-                    </div>
+                        <p class="font-semibold text-20" th:text="${classChannel.getClass_name()}"></p>
+                    </a>
                 </div>
 
-                <!-- UKM Items -->
-                <div v-if="filter == 'ukm'" class="grid grid-cols-8 gap-24 w-full">
-                    <div v-for="i in 6" :key="i" class="flex flex-col items-center justify-start text-center">
+                <!-- Ormawa Items -->
+                <div th:if="${#strings.equals(param.type, 'ormawa')}" class="grid grid-cols-8 gap-24 w-full">
+                    <a th:href="@{/join-ormawa(ormawa_id=${ormawaChannel.getId()})}" th:each="ormawaChannel : ${ormawaChannels}" class="flex flex-col items-center justify-start text-center cursor-pointer">
                         <div
                             class="bg-gradient-to-b from-orange to-red rounded-full h-[125px] w-[125px] mb-2 flex items-center justify-center">
-                            <img src="/assets/img/channels/alfath.png" alt="alfath"
-                                class="h-[120px] w-[120px]">
+                            <img th:src="${ormawaChannel.getOrmawa().getLogo()}" alt="alfath" class="h-[120px] w-[120px]">
                         </div>
-                        <p class="font-semibold text-20">AL-FATH</p>
-                    </div>
+                        <p class="font-semibold text-20" th:text="${ormawaChannel.getChannel_name()}"></p>
+                    </a>
                 </div>
 
 

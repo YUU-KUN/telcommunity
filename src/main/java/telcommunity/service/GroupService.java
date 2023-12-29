@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import telcommunity.model.ClassChannelChat;
 import telcommunity.model.Group;
+import telcommunity.model.GroupChat;
 import telcommunity.repository.GroupRepository;
 
 @Service
@@ -25,11 +27,29 @@ public class GroupService {
         }
     }
 
+    public Group getGroupById(String group_id) {
+        try {
+            return groupRepository.findById(group_id).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<GroupChat> getGroupChats(String group_id) {
+        try {
+            return getGroupById(group_id).getGroupChats();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void saveOrUpdate(Group group) {
         try {
             groupRepository.save(group);
         } catch (Exception e) {
-            e.printStackTrace();   
+            e.printStackTrace();
         }
     }
 }
