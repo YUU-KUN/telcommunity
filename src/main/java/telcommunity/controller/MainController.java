@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import telcommunity.model.ClassChannel;
 import telcommunity.model.Group;
 import telcommunity.model.User;
 import telcommunity.model.UserClassChannel;
@@ -36,25 +37,26 @@ class MainController {
     @GetMapping("/")
     public String home(Model model) {
         try {
-            List<Group> groups = groupService.getAllGroup();
-            List<UserClassChannel> userClassChannels = userClassChannelService.getUserClassChannels();
-            List<UserOrmawaChannel> userOrmawaChannels = userOrmawaChannelService.getUserOrmawaChannels();
-            model.addAttribute("userClassChannels", userClassChannels);
-            model.addAttribute("userOrmawaChannels", userOrmawaChannels);
-            model.addAttribute("groups", groups);
-    
             // get user loggedin data
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     
             String username = authentication.getName();
             User user = userRepository.findByUsername(username);
+            
+            List<Group> groups = groupService.getAllGroup();
+            List<UserOrmawaChannel> userOrmawaChannels = userOrmawaChannelService.getUserOrmawaChannels();
+            if (user.getRole() == "MAHASISWA") {
+                List<UserClassChannel> userClassChannels = userClassChannelService.getUserClassChannels();
+                model.addAttribute("userClassChannels", userClassChannels);
+            } else {
+                // List<ClassChannel> dosenClassChannels = channelService.getUserClassChannels();
+                // model.addAttribute("dosenClassChannels", dosenClassChannels);
+            }
+            model.addAttribute("userOrmawaChannels", userOrmawaChannels);
+            model.addAttribute("groups", groups);
+    
+            
             model.addAttribute("user", user);
-    
-            // UserClassChannel userClassChannels = new UserClassChannel();
-            // userClassChannels.getClassChannel().getClass_name()
-    
-            // UserOrmawaChannel userOrmawaChannel = new UserOrmawaChannel();
-            // userOrmawaChannel.getOrmawaChannel().getOrmawa().getLogo()
             return "home";
         } catch (Exception e) {
             e.printStackTrace();

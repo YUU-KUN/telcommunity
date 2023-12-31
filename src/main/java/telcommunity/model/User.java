@@ -38,6 +38,9 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Mahasiswa mahasiswa;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Dosen dosen;
+
     // UserChat
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
     private List<UserChat> userChats;
@@ -97,4 +100,14 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public Dosen getDosen() {
+        return dosen;
+    }
+
+    public void setDosen(Dosen dosen) {
+        this.dosen = dosen;
+    }
+
+    
 }

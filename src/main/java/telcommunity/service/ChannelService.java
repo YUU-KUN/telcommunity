@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import telcommunity.model.Books;
 import telcommunity.model.Channel;
 import telcommunity.model.ClassChannel;
 import telcommunity.model.ClassChannelChat;
@@ -72,7 +71,11 @@ public class ChannelService {
     }
 
     public void addClassChannel(ClassChannel classChannel) {
-        classChannelRepository.save(classChannel);
+        try {
+            classChannelRepository.save(classChannel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void addClassChannelChat(ClassChannelChat classChannelChat) {

@@ -16,6 +16,7 @@ import telcommunity.model.UserClassChannel;
 import telcommunity.model.UserOrmawaChannel;
 import telcommunity.repository.UserRepository;
 import telcommunity.service.ChannelService;
+import telcommunity.service.DosenService;
 import telcommunity.service.UserClassChannelService;
 import telcommunity.service.UserOrmawaChannelService;
 
@@ -33,30 +34,34 @@ public class ChannelController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    DosenService dosenService;
+
     @GetMapping("/channel")
     public String channel(@RequestParam(name = "type", defaultValue = "defaultType") String type, Model model) {
         model.addAttribute("classChannels", channelService.getClassChannels());
-        // ClassChannel classChannel = new ClassChannel();
-        // classChannel.getLogo()
         model.addAttribute("ormawaChannels", channelService.getOrmawaChannels());
         return "/channel";
     }
 
     @GetMapping("/customize-channel")
-    public String customizeChannel() {
+    public String customizeChannel(@RequestParam(name = "is_allow_all", defaultValue = "false") String is_allow_all,
+            Model model) {
         return "channel_add";
     }
 
     @GetMapping("/add-class")
-    public String redirectToAddClass() {
+    public String redirectToAddClass(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User authenticatedUser = userRepository.findByUsername(username);
-        
+
         if (authenticatedUser.getRole().equals("MAHASISWA")) {
             return "redirect:channel?type=class";
         } else {
-            return "redirect:customize-channel";
+            // System.out.println(authenticatedUser.getName());
+            // model.addAttribute("user", authenticatedUser);
+            return "redirect:customize-channel?is_allow_all=true";
         }
     }
 
@@ -65,12 +70,24 @@ public class ChannelController {
         return "redirect:channel?type=ormawa";
     }
 
-    // @PostMapping("/add-class")
-    // public String addClass(@RequestParam(name = "class_name") String class_name)
-    // {
-    // channelService.addClassChannel(class_name);
-    // return "redirect:channel?type=class";
-    // }
+    @PostMapping("/add-class")
+    public String addClass(@RequestParam(name = "channel_name") String channel_name) {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            User authenticatedUser = userRepository.findByUsername(username);
+    
+            ClassChannel classChannel = new ClassChannel();
+            classChannel.setClass_name("New Class");
+            classChannel.setDosen(authenticatedUser.getDosen());
+            classChannel.setLogo("/assets/img/groups/telu.png");
+            channelService.addClassChannel(classChannel);
+            return "redirect:/";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/";
+        }
+    }
 
     @GetMapping("/join-class")
     public String joinClass(@RequestParam(name = "class_id") String class_id) {
@@ -101,9 +118,6 @@ public class ChannelController {
 
         UserOrmawaChannel userOrmawaChannel = new UserOrmawaChannel();
         userOrmawaChannel.setOrmawaChannel(ormawaChannel);
-
-        // User user = new User();
-        // user.setId("85833ba3-9f52-44bd-8045-6be9adc4e58a");
 
         // get user loggedin data
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import telcommunity.model.ClassChannel;
 import telcommunity.model.User;
 import telcommunity.model.UserClassChannel;
 import telcommunity.repository.UserClassChannelRepository;

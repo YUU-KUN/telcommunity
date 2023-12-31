@@ -9,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import telcommunity.model.User;
-import telcommunity.model.UserClassChannel;
 import telcommunity.model.UserOrmawaChannel;
 import telcommunity.repository.UserOrmawaChannelRepository;
 import telcommunity.repository.UserRepository;

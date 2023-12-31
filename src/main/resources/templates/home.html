@@ -110,10 +110,9 @@
                                     <hr class="w-full border-2">
                                 </div>
                                 <div class="grid grid-cols-5 gap-x-4 gap-y-6">
-                                    <!-- <p th:text="${username}"></p> -->
 
                                     <!-- Class Item -->
-                                    <a th:href="@{/chat(class_channel_id=${userClassChannel.getClassChannel().getId()})}"
+                                    <a th:if="" th:href="@{/chat(class_channel_id=${userClassChannel.getClassChannel().getId()})}"
                                         th:each="userClassChannel : ${userClassChannels}"
                                         class="flex flex-col items-center justify-start text-center hover:cursor-pointer">
                                         <div class="bg-gradient-to-b from-orange to-red rounded-full p-[3px] mb-2">
