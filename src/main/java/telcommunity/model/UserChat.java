@@ -89,6 +89,9 @@ public class UserChat {
         this.updatedAt = updatedAt;
     }
 
+    public String getFormattedTime() {
+        // from 2024-01-02 01:32:40.921111 to 01:32 AM
+        return getCreatedAt().getHour() + ":" + getCreatedAt().getMinute() + " " + (getCreatedAt().getHour() > 12 ? "PM" : "AM");
+    }
 
-    
 }

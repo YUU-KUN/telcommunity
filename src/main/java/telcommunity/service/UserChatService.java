@@ -1,6 +1,7 @@
 package telcommunity.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,8 @@ public class UserChatService {
                 userChats.add(userchat);
             }
         });
-
+        
+        userChats.sort(Comparator.comparing(UserChat::getCreatedAt));
         return userChats;
     }
 }
