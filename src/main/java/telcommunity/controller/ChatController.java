@@ -30,6 +30,7 @@ import telcommunity.model.UserOrmawaChannel;
 import telcommunity.repository.UserRepository;
 import telcommunity.service.ChannelService;
 import telcommunity.service.GroupService;
+import telcommunity.service.UserChatService;
 import telcommunity.service.UserClassChannelService;
 import telcommunity.service.UserOrmawaChannelService;
 import telcommunity.service.UserService;
@@ -50,6 +51,9 @@ public class ChatController {
 
     @Autowired
     UserService userService;
+    
+    @Autowired
+    UserChatService userChatService;
 
     @Autowired
     UserRepository userRepository;
@@ -75,13 +79,26 @@ public class ChatController {
             @RequestParam(name = "user_id", required = false) String userId,
             Model model) {
 
+        // get user loggedin data
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        authenticatedUser = userRepository.findByUsername(username);
+
+        model.addAttribute("user", authenticatedUser);
+
         // Groups
         List<Group> groups = groupService.getAllGroup();
         model.addAttribute("groups", groups);
 
         // Channels
+        // Mahasiswa
         List<UserClassChannel> userClassChannels = userClassChannelService.getUserClassChannels();
         model.addAttribute("userClassChannels", userClassChannels);
+        // Dosen
+        List<ClassChannel> dosenClassChannels = channelService.getDosenClassChannels();
+        model.addAttribute("dosenClassChannels", dosenClassChannels);
+
+        // Ormawa
         List<UserOrmawaChannel> userOrmawaChannels = userOrmawaChannelService.getUserOrmawaChannels();
         model.addAttribute("userOrmawaChannels", userOrmawaChannels);
 
@@ -111,13 +128,11 @@ public class ChatController {
             model.addAttribute("chatHeaderLogo", ormawaChannel.getOrmawa().getLogo());
             List<OrmawaChannelChat> ormawaChannelChats = channelService.getOrmawaChannelChats(ormawaChannelId);
             model.addAttribute("ormawaChannelChats", ormawaChannelChats);
-        } else if (userId != null) {
-            User user = userService.getUserById(userId);
-            model.addAttribute("chatHeaderName", user.getName());
-            model.addAttribute("chatHeaderLogo", "/assets/img/nav-profile.png");
-            List<UserChat> personalChats = userService.getUserChats(userId);
-            // UserChat userChat = new UserChat();
-            // userChat.getReceiver().getId()
+        } else if (userId != null) { //receiver_id
+            User receiver = userService.getUserById(userId);
+            model.addAttribute("chatHeaderName", receiver.getName());
+            model.addAttribute("chatHeaderLogo", "/assets/img/nav-profile.png"); //TODO: Change to user profile
+            List<UserChat> personalChats = userChatService.getUserChats(userId);
 
             model.addAttribute("personalChats", personalChats);
         }
@@ -130,6 +145,11 @@ public class ChatController {
     public String chatPost(@RequestParam(name = "message", required = true) String message,
             @RequestParam(name = "user_id", required = true) String userId,
             Model model) {
+
+        // get user loggedin data
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        authenticatedUser = userRepository.findByUsername(username);
 
         if (message != null && !message.isEmpty()) {
 
@@ -144,22 +164,6 @@ public class ChatController {
                 userService.addUserChat(userChat);
                 return "redirect:/chat?user_id=" + userId;
             }
-
-            // ClassChannelChat classChannelChat = new ClassChannelChat();
-
-            // User user = new User();
-            // user.setId("85833ba3-9f52-44bd-8045-6be9adc4e58a");
-
-            // ClassChannel classChannel = new ClassChannel();
-            // classChannel.setId("822bd189-ca6f-4886-b04f-73de1c554554");
-            // classChannel.setLogo("null");
-            // classChannel.setClass_name("classname");
-            // classChannel.setDosen(null);
-
-            // classChannelChat.setMessage(message);
-            // classChannelChat.setClassChannel(classChannel);
-
-            // channelService.addClassChannelChat(classChannelChat);
         }
         return "chat";
     }

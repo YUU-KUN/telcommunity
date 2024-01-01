@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import telcommunity.model.Channel;
@@ -11,13 +13,18 @@ import telcommunity.model.ClassChannel;
 import telcommunity.model.ClassChannelChat;
 import telcommunity.model.OrmawaChannel;
 import telcommunity.model.OrmawaChannelChat;
+import telcommunity.model.User;
 import telcommunity.repository.ChannelRepository;
 import telcommunity.repository.ClassChannelChatRepository;
 import telcommunity.repository.ClassChannelRepository;
 import telcommunity.repository.OrmawaChannelRepository;
+import telcommunity.repository.UserRepository;
 
 @Service
 public class ChannelService {
+    @Autowired
+    UserRepository userRepository;
+    
     @Autowired
     ChannelRepository channelRepository;
 
@@ -67,6 +74,23 @@ public class ChannelService {
     public List<ClassChannel> getClassChannels() {
         List<ClassChannel> classChannels = new ArrayList<ClassChannel>();
         classChannelRepository.findAll().forEach(classChannel -> classChannels.add(classChannel));
+        return classChannels;
+    }
+
+    public List<ClassChannel> getDosenClassChannels() {
+        // get user loggedin data
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userRepository.findByUsername(username);
+        
+        List<ClassChannel> classChannels = new ArrayList<ClassChannel>();
+        if ("DOSEN".equals(user.getRole())) {
+            classChannelRepository.findAll().forEach(classChannel -> {
+                if (classChannel.getDosen().getId() == user.getDosen().getId() ) {
+                    classChannels.add(classChannel);
+                }
+            });
+        }
         return classChannels;
     }
 

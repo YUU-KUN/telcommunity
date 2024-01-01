@@ -78,7 +78,8 @@
                             <div class="grid grid-cols-4 gap-x-4 gap-y-6">
 
                                 <!-- Class Items -->
-                                <a onclick="connect()"
+                                <!-- MAHASISWA -->
+                                <a onclick="connect()" th:if="${#strings.equals(user.getRole(), 'MAHASISWA')}"
                                     th:href="@{/chat(class_channel_id=${userClassChannel.getClassChannel().getId()})}"
                                     th:each="userClassChannel : ${userClassChannels}"
                                     class="channelItem flex flex-col items-center justify-start text-center">
@@ -88,6 +89,18 @@
                                     </div>
                                     <p class="font-medium text-16"
                                         th:text="${userClassChannel.getClassChannel().getClass_name()}"></p>
+                                </a>
+                                <!-- DOSEN -->
+                                <a onclick="connect()" th:if="${#strings.equals(user.getRole(), 'DOSEN')}"
+                                    th:href="@{/chat(class_channel_id=${dosenClassChannel.getId()})}"
+                                    th:each="dosenClassChannel : ${dosenClassChannels}"
+                                    class="channelItem flex flex-col items-center justify-start text-center">
+                                    <div class="bg-gradient-to-b from-orange to-red rounded-full p-[3px] mb-2">
+                                        <img th:src="${dosenClassChannel.getLogo()}" alt=""
+                                            class="h-[70px] w-[70px]">
+                                    </div>
+                                    <p class="font-medium text-16"
+                                        th:text="${dosenClassChannel.getClass_name()}"></p>
                                 </a>
 
                                 <!-- Ormawa Items -->
@@ -119,8 +132,7 @@
                             </div>
                             <div class="px-7 w-full">
                                 <!-- Group Card -->
-                                <a th:href="@{/chat(user_id=${contact.getId()})}"
-                                    th:each="contact : ${userContacts}"
+                                <a th:href="@{/chat(user_id=${contact.getId()})}" th:each="contact : ${userContacts}"
                                     class="flex items-center justify-start w-full mb-7">
                                     <img src="/assets/img/groups/telu.png" alt="telu" class="shadow rounded-full mr-2">
                                     <div class="py-7 rounded-3xl shadow text-center w-full">
@@ -195,7 +207,8 @@
 
                             <!-- Perconal Chat -->
                             <div th:if="${param.user_id != null}" th:each="personalChat : ${personalChats}"
-                                class="mb-10" th:classappend="${personalChat.getReceiver().getId()} != ${param.user_id} ? 'self-end' : 'self-start'">
+                                class="mb-10"
+                                th:classappend="${#strings.equals(personalChat.getReceiver().getId(), param.user_id)} ? 'self-end' : 'self-start'">
                                 <div class="rounded-2xl rounded-tl-none bg-main-grey p-4 mb-1">
                                     <p th:text="${personalChat.message}"></p>
                                 </div>

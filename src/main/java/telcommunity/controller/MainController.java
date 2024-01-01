@@ -26,6 +26,9 @@ class MainController {
     GroupService groupService;
 
     @Autowired
+    ChannelService channelService;
+
+    @Autowired
     UserClassChannelService userClassChannelService;
 
     @Autowired
@@ -33,30 +36,29 @@ class MainController {
 
     @Autowired
     UserRepository userRepository;
-    
+
     @GetMapping("/")
     public String home(Model model) {
         try {
             // get user loggedin data
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    
+
             String username = authentication.getName();
             User user = userRepository.findByUsername(username);
-            
+            model.addAttribute("user", user);
+
             List<Group> groups = groupService.getAllGroup();
             List<UserOrmawaChannel> userOrmawaChannels = userOrmawaChannelService.getUserOrmawaChannels();
-            if (user.getRole() == "MAHASISWA") {
+            if ("MAHASISWA".equals(user.getRole())) {
                 List<UserClassChannel> userClassChannels = userClassChannelService.getUserClassChannels();
                 model.addAttribute("userClassChannels", userClassChannels);
-            } else {
-                // List<ClassChannel> dosenClassChannels = channelService.getUserClassChannels();
-                // model.addAttribute("dosenClassChannels", dosenClassChannels);
+            } else if ("DOSEN".equals(user.getRole())) {
+                List<ClassChannel> dosenClassChannels = channelService.getDosenClassChannels();
+                model.addAttribute("dosenClassChannels", dosenClassChannels);
             }
             model.addAttribute("userOrmawaChannels", userOrmawaChannels);
             model.addAttribute("groups", groups);
-    
             
-            model.addAttribute("user", user);
             return "home";
         } catch (Exception e) {
             e.printStackTrace();
