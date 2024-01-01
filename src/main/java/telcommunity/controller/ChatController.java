@@ -107,6 +107,7 @@ public class ChatController {
         model.addAttribute("userContacts", contacts);
         // User contact = new User();
         // contact.getName()
+        boolean is_able_to_chat = false;
 
         if (classChannelId != null) {
             ClassChannel classChannel = channelService.getClassChannelById(classChannelId);
@@ -114,7 +115,15 @@ public class ChatController {
             model.addAttribute("chatHeaderLogo", classChannel.getLogo());
             List<ClassChannelChat> classChannelChats = channelService.getClassChannelChats(classChannelId);
             model.addAttribute("classChannelChats", classChannelChats);
+
+            if (authenticatedUser.getRole().equals("MAHASISWA")) {
+                is_able_to_chat = false;
+            } else {
+                is_able_to_chat = true;
+            }
+            
         } else if (groupId != null) {
+            is_able_to_chat = true;
             Group group = groupService.getGroupById(groupId);
             model.addAttribute("chatHeaderName", group.getGroup_name());
             model.addAttribute("chatHeaderLogo", group.getLogo());
@@ -129,6 +138,8 @@ public class ChatController {
             List<OrmawaChannelChat> ormawaChannelChats = channelService.getOrmawaChannelChats(ormawaChannelId);
             model.addAttribute("ormawaChannelChats", ormawaChannelChats);
         } else if (userId != null) { //receiver_id
+            is_able_to_chat = true;
+
             User receiver = userService.getUserById(userId);
             model.addAttribute("chatHeaderName", receiver.getName());
             model.addAttribute("chatHeaderLogo", "/assets/img/nav-profile.png"); //TODO: Change to user profile
@@ -136,6 +147,7 @@ public class ChatController {
 
             model.addAttribute("personalChats", personalChats);
         }
+        model.addAttribute("is_able_to_chat", is_able_to_chat);
 
         return "chat";
     }

@@ -185,13 +185,17 @@
                             </div>
 
                             <!-- Class Channel Chat -->
-                            <div th:if="${param.class_channel_id != null}"
+                            <div th:if="${param.class_channel_id != null && classChannelChats.size() > 0}"
                                 th:each="classChannelChat : ${classChannelChats}" class="self-start mb-10">
                                 <div class="rounded-2xl rounded-tl-none bg-main-grey p-4 mb-1">
                                     <!-- <p>I am great, Thanks!</p> -->
                                     <p th:text="${classChannelChat.message}"></p>
                                 </div>
                                 <p class="text-left">9.23 AM</p>
+                            </div>
+                            <div th:if="${param.class_channel_id != null and classChannelChats.size() == 0}"
+                                class="flex flex-col items-center justify-center h-full">
+                                <p class="text-center">No Message</p>
                             </div>
 
                             <!-- Ormawa Channel Chat -->
@@ -204,17 +208,21 @@
                             </div>
 
                             <!-- Perconal Chat -->
-                            <div th:if="${param.user_id != null}" th:each="personalChat : ${personalChats}"
-                                class="mb-10"
+                            <div th:if="${param.user_id != null and personalChats.size() > 0}"
+                                th:each="personalChat : ${personalChats}" class="mb-10"
                                 th:classappend="${#strings.equals(personalChat.getReceiver().getId(), param.user_id)} ? 'self-end text-right' : 'self-start text-left'">
                                 <div class="rounded-2xl rounded-tl-none bg-main-grey p-4 mb-1">
                                     <p th:text="${personalChat.message}"></p>
                                 </div>
                                 <p class="" th:text="${personalChat.getFormattedTime()}"></p>
                             </div>
+                            <div th:if="${param.user_id != null and personalChats.size() == 0}"
+                                class="flex flex-col items-center justify-center h-full">
+                                <p class="text-center">No Message</p>
+                            </div>
 
                             <!-- Message Input Field -->
-                            <form th:if="${param.user_id != null}" action="/chat" method="post"
+                            <form th:if="${is_able_to_chat}" action="/chat" method="post"
                                 class="flex items-center justify-between w-full">
                                 <input type="text" name="user_id" th:value="${param.user_id}" hidden>
                                 <input name="message" type="text" placeholder="Enter Your Message"
