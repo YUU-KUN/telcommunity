@@ -29,6 +29,9 @@
                     <a th:href="@{/channel?type=class}" class="w-full py-6">
                         <img th:src="@{/assets/icon/channel.png}" alt="channel" class="mx-auto">
                     </a>
+                    <a th:if="${'MAHASISWA'.equals(user.getRole())}" th:href="@{/helpdesk}" class="w-full py-6">
+                        <img th:src="@{/assets/icon/helpdesk.png}" alt="helpdesk" class="mx-auto">
+                    </a>
                 </div>
 
             </div>
@@ -71,21 +74,13 @@
                                 <img src="/assets/icon/option.png" alt="option">
                             </div>
                             <div class="px-7 w-full">
-                                <!-- Group Card -->
-                                <div class="flex items-center justify-start w-full mb-7">
+                                <!-- Recent Chat Card -->
+                                <a th:href="${'chat?user_id=' + recentChat.getReceiver().getId()}" th:each="recentChat : ${recentChats}" class="flex items-center justify-start w-full mb-7">
                                     <img src="/assets/img/groups/telu.png" alt="telu" class="shadow rounded-full mr-2">
                                     <div class="py-7 rounded-3xl shadow text-center w-full">
-                                        <p class="font-bold text-20">[PEY] PRASTI EKO YUNANTO</p>
+                                        <p class="font-bold text-20" th:text="${recentChat.getReceiver().getName()}"></p>
                                     </div>
-                                </div>
-                                <!-- Group Card -->
-                                <div class="flex items-center justify-start w-full mb-7">
-                                    <img src="/assets/img/groups/himaif.png" alt="himaif"
-                                        class="shadow rounded-full mr-2">
-                                    <div class="py-7 rounded-3xl shadow text-center w-full">
-                                        <p class="font-bold text-20">Indra Wahyu</p>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
