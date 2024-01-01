@@ -1,7 +1,6 @@
 package telcommunity.model;
 
-import java.util.UUID;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +22,8 @@ public class Ormawa {
     @Column(name = "logo", nullable = false)
     private String logo;
 
-    // private KetuaOrmawa ketua;
+    @OneToOne(mappedBy = "ormawa", cascade = CascadeType.ALL)
+    private KetuaOrmawa ketuaOrmawa;
 
     // @OneToOne
     // private Channel channel;
@@ -50,6 +50,14 @@ public class Ormawa {
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    public KetuaOrmawa getKetuaOrmawa() {
+        return ketuaOrmawa;
+    }
+
+    public void setKetuaOrmawa(KetuaOrmawa ketuaOrmawa) {
+        this.ketuaOrmawa = ketuaOrmawa;
     }
 
     
