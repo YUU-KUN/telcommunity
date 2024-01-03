@@ -75,10 +75,13 @@
                             </div>
                             <div class="px-7 w-full">
                                 <!-- Recent Chat Card -->
-                                <a th:href="${'chat?user_id=' + recentChat.getReceiver().getId()}" th:each="recentChat : ${recentChats}" class="flex items-center justify-start w-full mb-7">
+                                <a th:href="${'chat?user_id=' + recentChat.getReceiver().getId()}"
+                                    th:each="recentChat : ${recentChats}"
+                                    class="flex items-center justify-start w-full mb-7">
                                     <img src="/assets/img/groups/telu.png" alt="telu" class="shadow rounded-full mr-2">
                                     <div class="py-7 rounded-3xl shadow text-center w-full">
-                                        <p class="font-bold text-20" th:text="${recentChat.getReceiver().getName()}"></p>
+                                        <p class="font-bold text-20" th:text="${recentChat.getReceiver().getName()}">
+                                        </p>
                                     </div>
                                 </a>
                             </div>
@@ -172,6 +175,34 @@
                                         <p class="font-medium text-16 mx-auto">+ ORMAWA</p>
                                     </a>
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-2">
+                <div class="bg-white rounded-3xl shadow shadow-pink h-full">
+                    <div class="flex flex-col items-center justify-start h-full p-9">
+                        <div class="flex items-center justify-start px-3 shadow rounded-3xl w-full py-2 px-3 mb-9">
+                            <div class="p-1 rounded-full bg-gradient-to-b from-red to-orange mr-7">
+                                <img th:src="@{/assets/img/nav-profile.png}" alt="nav-profile">
+                            </div>
+                            <div>
+                                <p class="font-bold text-20">Hanrocky Halim</p>
+                                <p class="font-bold text-16">Mahasiswa</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center justify-start px-3 shadow rounded-3xl w-full py-2 px-3 mb-9">
+                            <p class="font-bold text-24 mb-2">Profile</p>
+                            <div class="flex flex-col items-center justify-start h-full w-full">
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Nama</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" placeholder="Hanrocky Halim">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Nama</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" placeholder="Hanrocky Halim">
                                 </div>
                             </div>
                         </div>
