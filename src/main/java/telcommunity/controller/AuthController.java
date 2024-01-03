@@ -20,9 +20,14 @@ public class AuthController {
     @Autowired
     CustomUserDetailsService customUserDetailsService;
 
+    @GetMapping("/login-admin")
+    public String loginAdmin(@RequestParam(name = "role", defaultValue = "defaultType") String role, Model model) {
+        return "login_admin";
+    }
+
     @GetMapping("/login")
     public String login(@RequestParam(name = "role", defaultValue = "defaultType") String role, Model model) {
-        return "redirect:/login?role=mahasiswa";
+        return "redirect:/login?role=mahasiswa";    
     }
 
     @GetMapping("/register")
