@@ -1,95 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Channel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script th:src="@{/tailwind.js}"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="flex justify-center items-center h-screen w-screen p-7">
-        <!-- Sidebar -->
-        <div
-            class="flex flex-col items-center justify-between bg-white rounded-3xl py-14 w-[154px] shadow shadow-red mr-5 h-full">
-            <div class="flex flex-col items-center justify-start w-full">
-                <div class="p-1 rounded-full bg-gradient-to-b from-red to-orange mb-12">
-                    <img th:src="@{/assets/img/nav-profile.png}" alt="nav-profile">
-                </div>
+      <!-- Sidebar -->
+      <div
+        class="flex flex-col items-center justify-between bg-white rounded-3xl py-14 w-[154px] shadow shadow-red mr-5 h-full"
+      >
+        <div class="flex flex-col items-center justify-start w-full">
+          <div
+            class="p-1 rounded-full bg-gradient-to-b from-red to-orange mb-12"
+          >
+            <img th:src="@{/assets/img/nav-profile.png}" alt="nav-profile" />
+          </div>
 
-                <div class="flex flex-col items-center justify-center w-full">
-                    <a href="/" class="w-full py-6">
-                        <img th:src="@{/assets/icon/home.png}" alt="home" class="mx-auto">
-                    </a>
-                    <a th:href="@{/chat}" class="w-full py-6">
-                        <img th:src="@{/assets/icon/chat.png}" alt="chat" class="mx-auto">
-                    </a>
-                    <a th:href="@{/channel?type=class}" class="w-full py-6 bg-gradient-to-b from-[#DADADA] to-white">
-                        <img th:src="@{/assets/icon/channel.png}" alt="channel" class="mx-auto">
-                    </a>
-                </div>
-
-            </div>
-            <a href="/logout" class="cursor-pointer">
-                <img src="/assets/icon/logout.png" alt="logout">
+          <div class="flex flex-col items-center justify-center w-full">
+            <a href="/" class="w-full py-6">
+              <img
+                th:src="@{/assets/icon/home.png}"
+                alt="home"
+                class="mx-auto"
+              />
             </a>
+            <a th:href="@{/chat}" class="w-full py-6">
+              <img
+                th:src="@{/assets/icon/chat.png}"
+                alt="chat"
+                class="mx-auto"
+              />
+            </a>
+            <a
+              th:href="@{/channel?type=class}"
+              class="w-full py-6 bg-gradient-to-b from-[#DADADA] to-white"
+            >
+              <img
+                th:src="@{/assets/icon/channel.png}"
+                alt="channel"
+                class="mx-auto"
+              />
+            </a>
+            <a
+              th:if="${'MAHASISWA'.equals(user.getRole())}"
+              th:href="@{/helpdesk}"
+              class="w-full py-6"
+            >
+              <img
+                th:src="@{/assets/icon/helpdesk.png}"
+                alt="helpdesk"
+                class="mx-auto"
+              />
+            </a>
+          </div>
         </div>
-        <!-- End Sidebar -->
+        <a href="/logout" class="cursor-pointer">
+          <img src="/assets/icon/logout.png" alt="logout" />
+        </a>
+      </div>
+      <!-- End Sidebar -->
 
-        <div class="bg-white rounded-3xl shadow shadow-pink h-full w-full px-10 pt-6 pb-10">
-            <div class="flex flex-col items-center justify-start h-full">
-                <!-- Card Header -->
-                <div
-                    class="flex items-center justify-between w-full bg-gradient-to-b from-primary to-dark-red px-6 py-3 rounded-3xl mb-6">
-                    <p class="text-white text-40 font-bold">Channels</p>
-                    <img src="/assets/icon/option.png" alt="option">
-                </div>
+      <div
+        class="bg-white rounded-3xl shadow shadow-pink h-full w-full px-10 pt-6 pb-10"
+      >
+        <div class="flex flex-col items-center justify-start h-full">
+          <!-- Card Header -->
+          <div
+            class="flex items-center justify-between w-full bg-gradient-to-b from-primary to-dark-red px-6 py-3 rounded-3xl mb-6"
+          >
+            <p class="text-white text-40 font-bold">Channels</p>
+            <img src="/assets/icon/option.png" alt="option" />
+          </div>
 
-                <!-- Filter -->
-                <div class="flex items-center justify-start w-full mb-12">
-                    <a href="/channel?type=class">
-                        <div class="py-2 px-8 rounded-full mr-4 mb-3"
-                            :class="isFilter('class') ? 'bg-primary text-white' : 'text-primary border border-primary'">
-                            <p class="font-semibold text-24">Kelas</p>
-                        </div>
-                    </a>
-                    <a href="/channel?type=ormawa">
-                        <div class="py-2 px-8 rounded-full mr-4 drop-shadow-lg mb-3"
-                            :class="isFilter('ormawa') ? 'bg-primary text-white' : 'text-primary border border-primary'">
-                            <p class="font-semibold text-24">Ormawa</p>
-                        </div>
-                    </a>
-                </div>
+          <!-- Filter -->
+          <div class="flex items-center justify-start w-full mb-12">
+            <a href="/channel?type=class">
+              <div
+                class="py-2 px-8 rounded-full mr-4 mb-3"
+                :class="isFilter('class') ? 'bg-primary text-white' : 'text-primary border border-primary'"
+              >
+                <p class="font-semibold text-24">Kelas</p>
+              </div>
+            </a>
+            <a href="/channel?type=ormawa">
+              <div
+                class="py-2 px-8 rounded-full mr-4 drop-shadow-lg mb-3"
+                :class="isFilter('ormawa') ? 'bg-primary text-white' : 'text-primary border border-primary'"
+              >
+                <p class="font-semibold text-24">Ormawa</p>
+              </div>
+            </a>
+          </div>
 
-                <!-- Class Items -->
-                <div th:if="${#strings.equals(param.type, 'class')}" class="grid grid-cols-8 gap-24 w-full">
-                    <!-- th:href="/join-class/${classChannel.getId()}" -->
-                    <a th:href="@{/join-class(class_id=${classChannel.getId()})}" th:each="classChannel : ${classChannels}" class="flex flex-col items-center justify-start text-center cursor-pointer">
-                        <div
-                            class="bg-gradient-to-b from-orange to-red rounded-full h-[125px] w-[125px] mb-2 flex items-center justify-center">
-                            <img th:src="${classChannel.getLogo()}" th:alt="${classChannel.getClass_name()}" class="h-[120px] w-[120px]">
-                        </div>
-                        <p class="font-semibold text-20" th:text="${classChannel.getClass_name()}"></p>
-                    </a>
-                </div>
+          <!-- Class Items -->
+          <div
+            th:if="${#strings.equals(param.type, 'class')}"
+            class="grid grid-cols-8 gap-24 w-full px-5"
+          >
+            <!-- th:href="/join-class/${classChannel.getId()}" -->
+            <a
+              th:href="@{/join-class(class_id=${classChannel.getId()})}"
+              th:each="classChannel : ${classChannels}"
+              class="flex flex-col items-center justify-start text-center cursor-pointer"
+            >
+              <div
+                class="bg-gradient-to-b from-orange to-red rounded-full h-[125px] w-[125px] mb-2 flex items-center justify-center"
+              >
+                <img
+                  th:src="${classChannel.getLogo()}"
+                  th:alt="${classChannel.getClass_name()}"
+                  class="h-[120px] w-[120px]"
+                />
+              </div>
+              <p
+                class="font-semibold text-20"
+                th:text="${classChannel.getClass_name()}"
+              ></p>
+            </a>
+          </div>
 
-                <!-- Ormawa Items -->
-                <div th:if="${#strings.equals(param.type, 'ormawa')}" class="grid grid-cols-8 gap-24 w-full">
-                    <a th:href="@{/join-ormawa(ormawa_id=${ormawaChannel.getId()})}" th:each="ormawaChannel : ${ormawaChannels}" class="flex flex-col items-center justify-start text-center cursor-pointer">
-                        <div
-                            class="bg-gradient-to-b from-orange to-red rounded-full h-[125px] w-[125px] mb-2 flex items-center justify-center">
-                            <img th:src="${ormawaChannel.getOrmawa().getLogo()}" alt="alfath" class="h-[120px] w-[120px]">
-                        </div>
-                        <p class="font-semibold text-20" th:text="${ormawaChannel.getChannel_name()}"></p>
-                    </a>
-                </div>
-
-
-            </div>
+          <!-- Ormawa Items -->
+          <div
+            th:if="${#strings.equals(param.type, 'ormawa')}"
+            class="grid grid-cols-8 gap-24 w-full"
+          >
+            <a
+              th:href="@{/join-ormawa(ormawa_id=${ormawaChannel.getId()})}"
+              th:each="ormawaChannel : ${ormawaChannels}"
+              class="flex flex-col items-center justify-start text-center cursor-pointer"
+            >
+              <div
+                class="bg-gradient-to-b from-orange to-red rounded-full h-[125px] w-[125px] mb-2 flex items-center justify-center"
+              >
+                <img
+                  th:src="${ormawaChannel.getOrmawa().getLogo()}"
+                  alt="alfath"
+                  class="h-[120px] w-[120px]"
+                />
+              </div>
+              <p
+                class="font-semibold text-20"
+                th:text="${ormawaChannel.getChannel_name()}"
+              ></p>
+            </a>
+          </div>
         </div>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>

@@ -86,7 +86,12 @@ class MainController {
     }
 
     @GetMapping("/helpdesk")
-    public String helpdesk() {
+    public String helpdesk(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User authenticatedUser = userRepository.findByUsername(username);
+
+        model.addAttribute("user", authenticatedUser);
         return "helpdesk";
     }
 
