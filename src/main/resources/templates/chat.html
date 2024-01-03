@@ -183,6 +183,10 @@
                                 </div>
                                 <p class="text-left">9.23 AM</p>
                             </div>
+                            <div th:if="${param.group_id != null and groupChats.size() == 0}"
+                                class="flex flex-col items-center justify-center h-full">
+                                <p class="text-center">No Message</p>
+                            </div>
 
                             <!-- Class Channel Chat -->
                             <div th:if="${param.class_channel_id != null && classChannelChats.size() > 0}"
@@ -205,6 +209,10 @@
                                     <p th:text="${ormawaChannelChat.message}"></p>
                                 </div>
                                 <p class="text-left">9.23 AM</p>
+                            </div>
+                            <div th:if="${param.ormawa_channel_id != null and ormawaChannelChats.size() == 0}"
+                                class="flex flex-col items-center justify-center h-full">
+                                <p class="text-center">No Message</p>
                             </div>
 
                             <!-- Perconal Chat -->
