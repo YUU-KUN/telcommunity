@@ -3,6 +3,7 @@ package telcommunity.model;
 import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +26,10 @@ public class KetuaOrmawa {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = true)
     private User user;
-
+    
+    @Column(name = "status", nullable = false)
+    private String status; // FORMER, CURRENT, PENDING
+    
     public String getId() {
         return id;
     }
@@ -50,5 +54,14 @@ public class KetuaOrmawa {
         this.user = user;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    
     
 }

@@ -22,6 +22,9 @@ public class Ormawa {
     @Column(name = "logo", nullable = false)
     private String logo;
 
+    @Column(name = "category", nullable = true)
+    private String category;
+
     @OneToOne(mappedBy = "ormawa", cascade = CascadeType.ALL)
     private KetuaOrmawa ketuaOrmawa;
 

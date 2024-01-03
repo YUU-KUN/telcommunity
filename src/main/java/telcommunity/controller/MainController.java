@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import telcommunity.model.ClassChannel;
 import telcommunity.model.Group;
+import telcommunity.model.Ormawa;
 import telcommunity.model.User;
 import telcommunity.model.UserChat;
 import telcommunity.model.UserClassChannel;
@@ -20,6 +21,7 @@ import telcommunity.model.UserOrmawaChannel;
 import telcommunity.repository.UserRepository;
 import telcommunity.service.ChannelService;
 import telcommunity.service.GroupService;
+import telcommunity.service.OrmawaService;
 import telcommunity.service.UserChatService;
 import telcommunity.service.UserClassChannelService;
 import telcommunity.service.UserOrmawaChannelService;
@@ -36,6 +38,9 @@ class MainController {
     ChannelService channelService;
 
     @Autowired
+    OrmawaService ormawaService;
+
+    @Autowired
     UserClassChannelService userClassChannelService;
 
     @Autowired
@@ -49,7 +54,6 @@ class MainController {
         try {
             // get user loggedin data
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
             String username = authentication.getName();
             User user = userRepository.findByUsername(username);
             model.addAttribute("user", user);
@@ -86,17 +90,22 @@ class MainController {
     }
 
     @GetMapping("/helpdesk")
-    public String helpdesk() {
+    public String helpdesk(Model model) {
+        List<Ormawa> ormawas = ormawaService.getAllOrmawa();
+        model.addAttribute("ormawas", ormawas);
         return "helpdesk";
     }
 
     @PostMapping("/helpdesk")
-    public String helpdeskPost(@RequestParam(name = "role", defaultValue = "defaultType") String role,
-            @RequestParam(name = "ormawa_name", defaultValue = "defaultType") String ormawa_name,
-            @RequestParam(name = "category", defaultValue = "defaultType") String caategory,
+    public String helpdeskPost(
+            @RequestParam(name = "ormawa", defaultValue = "defaultType") Ormawa ormawa,
             Model model) {
-        System.out.println(ormawa_name);
-        System.out.println(caategory);
+
+        // Get Authenticated User
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userRepository.findByUsername(username);
+        ormawaService.requestKetuaOrmawa(ormawa, user);
 
         // if ("MAHASISWA".equals(role)) {
         // return "redirect:/login?role=mahasiswa";
