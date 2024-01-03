@@ -2,6 +2,7 @@ package telcommunity.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,22 +17,22 @@ import telcommunity.repository.OrmawaRepository;
 
 @Service
 public class OrmawaService {
-    @Autowired 
+    @Autowired
     OrmawaRepository ormawaRepository;
 
-    @Autowired 
+    @Autowired
     KetuaOrmawaRepository ketuaOrmawaRepository;
 
     @Autowired
     OrmawaChannelRepository ormawaChannelRepository;
-    
+
     public void initOrmawa() {
         try {
             Ormawa ormawa = new Ormawa();
             ormawa.setOrmawa_name("AL-FATH");
             ormawa.setLogo("/assets/img/channels/alfath.png");
             ormawaRepository.save(ormawa);
-    
+
             OrmawaChannel ormawaChannel = new OrmawaChannel();
             ormawaChannel.setOrmawa(ormawa);
             ormawaChannel.setChannel_name(ormawa.getOrmawa_name());
@@ -45,6 +46,10 @@ public class OrmawaService {
         List<Ormawa> ormawas = new ArrayList<Ormawa>();
         ormawaRepository.findAll().forEach(ormawa -> ormawas.add(ormawa));
         return ormawas;
+    }
+
+    public Ormawa getOrmawa(String id) {
+        return ormawaRepository.findById(id).get();
     }
 
     public void requestKetuaOrmawa(Ormawa ormawa, User user) {
@@ -69,5 +74,37 @@ public class OrmawaService {
         });
 
         return listKetua;
+    }
+
+    public void declineKetuaOrmawa(String ketuaOrmawaId) {
+        try {
+            KetuaOrmawa ketuaOrmawa = ketuaOrmawaRepository.findById(ketuaOrmawaId).get();
+            ketuaOrmawaRepository.delete(ketuaOrmawa);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void acceptKetuaOrmawa(String ketuaOrmawaId) {
+        try {
+            // Get new ketua data
+            KetuaOrmawa ketuaOrmawa = ketuaOrmawaRepository.findById(ketuaOrmawaId).get();
+
+            // Set old ketua status to former
+            ketuaOrmawaRepository.findAll().forEach(former -> {
+                if (former.getOrmawa().getId().equals(ketuaOrmawa.getOrmawa().getId())
+                        && former.getStatus().equals("CURRENT")) {
+                    former.setStatus("FORMER");
+                    ketuaOrmawaRepository.save(former);
+                    return;
+                }
+            });
+
+            // Set New Ketua status to Current
+            ketuaOrmawa.setStatus("CURRENT");
+            ketuaOrmawaRepository.save(ketuaOrmawa);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

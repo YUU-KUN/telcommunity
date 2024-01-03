@@ -8,11 +8,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import telcommunity.model.ClassChannel;
 import telcommunity.model.Group;
+import telcommunity.model.KetuaOrmawa;
 import telcommunity.model.Ormawa;
 import telcommunity.model.User;
 import telcommunity.model.UserChat;
@@ -73,6 +78,9 @@ class MainController {
 
                 List<UserChat> recentChats = userChatService.getRecentChats();
                 model.addAttribute("recentChats", recentChats);
+            } else { // SUPER ADMIN
+                List<KetuaOrmawa> requestKetuaOrmawas = ormawaService.getRequestKetuaOrmawas();
+                model.addAttribute("requestKetuaOrmawas", requestKetuaOrmawas);
             }
             model.addAttribute("userOrmawaChannels", userOrmawaChannels);
             model.addAttribute("groups", groups);
@@ -98,13 +106,15 @@ class MainController {
 
     @PostMapping("/helpdesk")
     public String helpdeskPost(
-            @RequestParam(name = "ormawa", defaultValue = "defaultType") Ormawa ormawa,
+            @RequestParam(name = "ormawa_id", defaultValue = "defaultType") String ormawaId,
             Model model) {
 
         // Get Authenticated User
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User user = userRepository.findByUsername(username);
+
+        Ormawa ormawa = ormawaService.getOrmawa(ormawaId);
         ormawaService.requestKetuaOrmawa(ormawa, user);
 
         // if ("MAHASISWA".equals(role)) {
@@ -119,5 +129,19 @@ class MainController {
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+    @GetMapping("/set-ketua-ormawa")
+    public String declineKetuaOrmawa(
+            @RequestParam(name = "ketua_ormawa_id", defaultValue = "defaultType") String ketuaOrmawaId,
+            @RequestParam(name = "action", defaultValue = "defaultType") String action,
+            Model model) {
+        if (action.equals("approve")) {
+            ormawaService.acceptKetuaOrmawa(ketuaOrmawaId);
+        } else {
+            ormawaService.declineKetuaOrmawa(ketuaOrmawaId);
+        }
+
+        return "redirect:/";
     }
 }

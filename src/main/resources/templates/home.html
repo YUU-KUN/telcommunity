@@ -70,7 +70,9 @@
                         <div class="flex flex-col items-center justify-start h-full">
                             <div
                                 class="flex items-center justify-between w-full mb-6 bg-gradient-to-b from-primary to-dark-red px-7 py-3 rounded-full">
-                                <p class="text-white text-20">Recently Chatted</p>
+                                <p class="text-white text-20"
+                                    th:text="${'SUPERADMIN'.equals(user.getRole()) ? 'Ketua Ormawa Requests' : 'Recently Chatted'}">
+                                </p>
                                 <img src="/assets/icon/option.png" alt="option">
                             </div>
                             <div class="px-7 w-full">
@@ -84,6 +86,36 @@
                                         </p>
                                     </div>
                                 </a>
+
+                                <!-- Ormawa Request Card -->
+                                <div th:each="requestKetuaOrmawa : ${requestKetuaOrmawas}"
+                                    class="flex items-center justify-start w-full mb-7">
+                                    <img th:src="${requestKetuaOrmawa.getOrmawa().getLogo()}" alt="telu"
+                                        class="shadow rounded-full mr-2">
+                                    <div
+                                        class="flex items-center justify-between rounded-3xl shadow text-left w-full p-5">
+                                        <div class="mb-0">
+                                            <p class="font-bold text-20"
+                                                th:text="${requestKetuaOrmawa.getOrmawa().getKetuaOrmawa().getUser().getName()}">
+                                            </p>
+                                            <p class="font-medium text-16"
+                                                th:text="'as Ketua' + ${requestKetuaOrmawa.getOrmawa().getOrmawa_name()}">
+                                            </p>
+                                        </div>
+                                        <div class="flex items-center justify-center">
+
+                                            <a class="mr-1 cursor-pointer"
+                                                th:href="@{/set-ketua-ormawa(ketua_ormawa_id=${requestKetuaOrmawa.id}, action='decline')}">
+                                                <img src="/assets/icon/decline.png" alt="decline">
+                                            </a>
+                                            <a th:href="@{/set-ketua-ormawa(ketua_ormawa_id=${requestKetuaOrmawa.id}, action='approve')}"
+                                                class="cursor-pointer">
+                                                <img src="/assets/icon/approve.png" alt="approve">
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -193,16 +225,19 @@
                                 <p class="font-bold text-16">Mahasiswa</p>
                             </div>
                         </div>
-                        <div class="flex flex-col items-center justify-start px-3 shadow rounded-3xl w-full py-2 px-3 mb-9">
+                        <div
+                            class="flex flex-col items-center justify-start px-3 shadow rounded-3xl w-full py-2 px-3 mb-9">
                             <p class="font-bold text-24 mb-2">Profile</p>
                             <div class="flex flex-col items-center justify-start h-full w-full">
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">Nama</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1" placeholder="Hanrocky Halim">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
+                                        placeholder="Hanrocky Halim">
                                 </div>
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">Nama</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1" placeholder="Hanrocky Halim">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
+                                        placeholder="Hanrocky Halim">
                                 </div>
                             </div>
                         </div>
@@ -211,6 +246,13 @@
             </div>
         </div>
     </div>
+
+    <script th:inline="javascript">
+        function __redirect(url) {
+            window.location.href = url;
+        }
+    </script>
+
 </body>
 
 </html>
