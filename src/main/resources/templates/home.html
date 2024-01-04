@@ -221,23 +221,71 @@
                                 <img th:src="@{/assets/img/nav-profile.png}" alt="nav-profile">
                             </div>
                             <div>
-                                <p class="font-bold text-20">Hanrocky Halim</p>
-                                <p class="font-bold text-16">Mahasiswa</p>
+                                <p class="font-bold text-20", th:text="${user.getName()}"></p>
+                                <p class="font-bold text-16", th:text="${user.getRole()}"></p>
                             </div>
                         </div>
-                        <div
+
+                        <!-- Current Mahasiswa Detail -->
+                        <div th:if="${#strings.equals(user.getRole, 'MAHASISWA')}"
                             class="flex flex-col items-center justify-start px-3 shadow rounded-3xl w-full py-2 px-3 mb-9">
                             <p class="font-bold text-24 mb-2">Profile</p>
                             <div class="flex flex-col items-center justify-start h-full w-full">
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">Nama</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
-                                        placeholder="Hanrocky Halim">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${user.getName()}">
                                 </div>
                                 <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">NIM</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${nim_mhs}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Kelas</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${kelas_mhs}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Jurusan</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${jurusan_mhs}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Fakultas</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${fakultas_mhs}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Angkatan</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${angkatan_mhs}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Current DOSEN Detail -->
+                        <div th:if="${#strings.equals(user.getRole, 'DOSEN')}"
+                            class="flex flex-col items-center justify-start px-3 shadow rounded-3xl w-full py-2 px-3 mb-9">
+                            <p class="font-bold text-24 mb-2">Profile</p>
+                            <div class="flex flex-col items-center justify-start h-full w-full">
+                                <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">Nama</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
-                                        placeholder="Hanrocky Halim">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${user.getName()}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Gelar</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" value="S.T., M.Kom.">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">NIP</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${nip_dsn}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Kode</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${kode_dsn}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Fakultas</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" value="Informatika">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Thn Msk</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" value="2018">
                                 </div>
                             </div>
                         </div>
