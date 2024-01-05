@@ -1,5 +1,8 @@
 package telcommunity.model;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import java.time.LocalDateTime;
 
 @Entity
 public class ClassChannelChat {
@@ -34,6 +38,12 @@ public class ClassChannelChat {
     @Lob
     private String message;
 
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
     public String getId() {
         return id;
     }
@@ -56,6 +66,28 @@ public class ClassChannelChat {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getFormattedTime() {
+        // from 2024-01-02 01:32:40.921111 to 01:32 AM
+        return getCreatedAt().getHour() + ":" + getCreatedAt().getMinute() + " "
+                + (getCreatedAt().getHour() >= 12 ? "PM" : "AM");
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
 }

@@ -19,6 +19,7 @@ import telcommunity.repository.ClassChannelChatRepository;
 import telcommunity.repository.ClassChannelRepository;
 import telcommunity.repository.OrmawaChannelRepository;
 import telcommunity.repository.UserRepository;
+import telcommunity.repository.OrmawaChannelChatRepository;
 
 @Service
 public class ChannelService {
@@ -30,6 +31,9 @@ public class ChannelService {
 
     @Autowired
     OrmawaChannelRepository ormawaChannelRepository;
+
+    @Autowired
+    OrmawaChannelChatRepository ormawaChannelChatRepository;
 
     @Autowired
     ClassChannelRepository classChannelRepository;
@@ -105,6 +109,14 @@ public class ChannelService {
     public void addClassChannelChat(ClassChannelChat classChannelChat) {
         try {
             classChannelChatRepository.save(classChannelChat);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addOrmawaChannelChat(OrmawaChannelChat ormawaChannelChat) {
+        try {
+            ormawaChannelChatRepository.save(ormawaChannelChat);
         } catch (Exception e) {
             e.printStackTrace();
         }

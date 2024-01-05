@@ -181,7 +181,7 @@
                                 <div class="rounded-2xl rounded-tl-none bg-main-grey p-4 mb-1">
                                     <p th:text="${groupChat.message}"></p>
                                 </div>
-                                <p class="text-left">9.23 AM</p>
+                                <p class="" th:text="${groupChat.getFormattedTime()}"></p>
                             </div>
                             <div th:if="${param.group_id != null and groupChats.size() == 0}"
                                 class="flex flex-col items-center justify-center h-full">
@@ -192,10 +192,9 @@
                             <div th:if="${param.class_channel_id != null && classChannelChats.size() > 0}"
                                 th:each="classChannelChat : ${classChannelChats}" class="self-start mb-10">
                                 <div class="rounded-2xl rounded-tl-none bg-main-grey p-4 mb-1">
-                                    <!-- <p>I am great, Thanks!</p> -->
                                     <p th:text="${classChannelChat.message}"></p>
                                 </div>
-                                <p class="text-left">9.23 AM</p>
+                                <p class="" th:text="${classChannelChat.getFormattedTime()}"></p>
                             </div>
                             <div th:if="${param.class_channel_id != null and classChannelChats.size() == 0}"
                                 class="flex flex-col items-center justify-center h-full">
@@ -232,7 +231,14 @@
                             <!-- Message Input Field -->
                             <form th:if="${is_able_to_chat}" action="/chat" method="post"
                                 class="flex items-center justify-between w-full">
-                                <input type="text" name="user_id" th:value="${param.user_id}" hidden>
+                                <input th:if="${param.user_id != null}" type="text" name="user_id"
+                                    th:value="${param.user_id}" hidden>
+                                <input th:if="${param.group_id != null}" type="text" name="group_id"
+                                    th:value="${param.group_id}" hidden>
+                                <input th:if="${param.class_channel_id != null}" type="text" name="class_channel_id"
+                                    th:value="${param.class_channel_id}" hidden>
+                                <input th:if="${param.ormawa_channel_id != null}" type="text" name="ormawa_channel_id"
+                                    th:value="${param.ormawa_channel_id}" hidden>
                                 <input name="message" type="text" placeholder="Enter Your Message"
                                     class="message text-black p-7 bg-[#F2F2F2] w-full rounded-3xl mr-4 focus:outline-none">
                                 <!-- <input type="text" name="group_id" th:value="${param.class_channel_id != null ? param.class_channel_id : param.ormawa_channel_id}" hidden> -->
