@@ -114,6 +114,12 @@ class MainController {
     public String helpdesk(Model model) {
         List<Ormawa> ormawas = ormawaService.getAllOrmawa();
         model.addAttribute("ormawas", ormawas);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User authenticatedUser = userRepository.findByUsername(username);
+
+        model.addAttribute("user", authenticatedUser);
         return "helpdesk";
     }
 

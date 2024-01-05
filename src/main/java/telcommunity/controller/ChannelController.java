@@ -39,8 +39,14 @@ public class ChannelController {
 
     @GetMapping("/channel")
     public String channel(@RequestParam(name = "type", defaultValue = "defaultType") String type, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User authenticatedUser = userRepository.findByUsername(username);
+
         model.addAttribute("classChannels", channelService.getClassChannels());
         model.addAttribute("ormawaChannels", channelService.getOrmawaChannels());
+        model.addAttribute("user", authenticatedUser);
+
         return "/channel";
     }
 
@@ -97,9 +103,6 @@ public class ChannelController {
         UserClassChannel userClassChannel = new UserClassChannel();
         userClassChannel.setClassChannel(classChannel);
 
-        // User user = new User();
-        // user.setId("85833ba3-9f52-44bd-8045-6be9adc4e58a");
-
         // get user loggedin data
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -108,7 +111,7 @@ public class ChannelController {
 
         userClassChannelService.joinClassChannel(userClassChannel);
 
-        return "home";
+        return "redirect:/";
     }
 
     @GetMapping("/join-ormawa")
