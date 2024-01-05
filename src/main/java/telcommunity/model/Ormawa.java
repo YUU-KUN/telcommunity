@@ -6,7 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,7 +25,8 @@ public class Ormawa {
     @Column(name = "category", nullable = true)
     private String category;
 
-    @OneToOne(mappedBy = "ormawa", cascade = CascadeType.ALL)
+    // @OneToOne(mappedBy = "ormawa", cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private KetuaOrmawa ketuaOrmawa;
 
     // @OneToOne
@@ -62,8 +63,6 @@ public class Ormawa {
     public void setKetuaOrmawa(KetuaOrmawa ketuaOrmawa) {
         this.ketuaOrmawa = ketuaOrmawa;
     }
-
-    
 
     // public KetuaOrmawa getKetua() {
     // return ketua;

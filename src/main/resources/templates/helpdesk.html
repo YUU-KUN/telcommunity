@@ -60,21 +60,13 @@
 
                 <div th:if="${param.confirmation}" class="flex flex-col items-stretch justify-between h-full w-full">
                     <form action="/helpdesk" method="post" class="flex flex-col items-center justify-between h-full">
-                        <!-- <div class="flex flex-col items-center justify-start w-full">
-                            <div class="flex flex-col items-start justify-start mb-10 w-full">
-                                <label for="ormawa_name" class="font-medium text-36 mb-5">Nama Ormawa :</label>
-                                <input name="ormawa_name" id="ormawa_name" type="text" class="rounded-full shadow text-32 shadow-red-500 w-[566px] h-[80px] px-4">
-                            </div>
-                            <div class="flex flex-col items-start justify-start mb-10 w-full">
-                                <label for="category" class="font-medium text-36 mb-5">Kategori :</label>
-                                <input name="category" id="category" type="text" class="rounded-full shadow text-32 shadow-red-500 w-[566px] h-[80px] px-4">
-                            </div>
-                        </div> -->
                         <div class="flex flex-col items-center justify-start w-full">
                             <label for="ormawa" class="font-medium text-36 mb-5">Pilih Ormawa :</label>
-                            <select name="ormawa_id" id="ormawa" class="shadow text-32 shadow-red-500 w-[566px] h-[80px] px-4">
+                            <select name="ormawa_id" id="ormawa"
+                                class="shadow text-32 shadow-red-500 w-[566px] h-[80px] px-4">
                                 <option value="" selected disabled>Silahkan pilih Ormawa</option>
-                                <option th:each="ormawa : ${ormawas}" th:text="${ormawa.getOrmawa_name()}" th:value="${ormawa.getId()}"></option>
+                                <option th:each="ormawa : ${ormawas}" th:text="${ormawa.getOrmawa_name()}"
+                                    th:value="${ormawa.getId()}"></option>
                             </select>
                         </div>
 

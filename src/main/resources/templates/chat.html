@@ -107,15 +107,112 @@
             </div>
           </div>
 
-          <!-- Channel Card -->
-          <div class="row-span-1 h-full">
-            <div class="bg-white rounded-3xl p-2 shadow shadow-pink h-full">
-              <div class="flex flex-col items-center justify-start h-full">
-                <div
-                  class="flex items-center justify-between w-full mb-6 bg-gradient-to-b from-primary to-dark-red px-7 py-3 rounded-full"
-                >
-                  <p class="text-white text-20">Channels</p>
-                  <img src="/assets/icon/option.png" alt="option" />
+            <!-- Chat Section -->
+            <div th:if="${param.group_id != null or param.class_channel_id != null or param.ormawa_channel_id != null or param.user_id != null}"
+                class="col-span-5 h-full overflow-y-auto">
+                <div class="bg-white rounded-3xl px-10 pt-6 pb-10 shadow shadow-pink h-full">
+                    <div class="flex flex-col items-center justify-between h-full">
+
+                        <!-- Card Header -->
+                        <div
+                            class="flex items-center justify-between w-full mb-6 bg-gradient-to-b from-primary to-dark-red px-6 py-3 rounded-3xl">
+                            <img th:src="${chatHeaderLogo}" alt="avatar-1" class="mr-6">
+                            <!-- <img src="../../assets/img/chats/avatar-1.png" alt="avatar-1" class="mr-6"> -->
+                            <div class="flex flex-col items-start justify-center w-full">
+                                <p th:text="${chatHeaderName}" class="font-bold text-white text-30"></p>
+                                <!-- <p class="text-white text-16">Online</p> -->
+                            </div>
+                            <img src="/assets/icon/option.png" alt="option">
+                        </div>
+
+                        <!-- Chat Section -->
+                        <div class="flex flex-col items-center justify-between w-full h-full overflow-y-auto">
+                            <!-- <div class="bg-main-grey px-7 py-2 rounded-full font-semibold text-16 mb-8">
+                                Today
+                            </div> -->
+
+                            <!-- Chat Baloon -->
+                            <!-- <div th:each="classChannelChat : ${classChannelChats}" class="self-end mb-10">
+                                <div class="rounded-2xl rounded-tr-none bg-[#AA0000] text-white p-4 mb-1">
+                                    <p th:text="${classChannelChat.message}"></p>
+                                </div>
+                                <p class="text-right">9.20 AM</p>
+                            </div> -->
+
+                            <!-- Group Chat -->
+                            <div th:if="${param.group_id != null}" th:each="groupChat : ${groupChats}"
+                                class="self-start mb-10 w-1/3">
+                                <div class="rounded-2xl rounded-tl-none bg-main-grey p-4 mb-1">
+                                    <p th:text="${groupChat.message}"></p>
+                                </div>
+                                <p class="" th:text="${groupChat.getFormattedTime()}"></p>
+                            </div>
+                            <div th:if="${param.group_id != null and groupChats.size() == 0}"
+                                class="flex flex-col items-center justify-center h-full">
+                                <p class="text-center">No Message</p>
+                            </div>
+
+                            <!-- Class Channel Chat -->
+                            <div th:if="${param.class_channel_id != null && classChannelChats.size() > 0}"
+                                th:each="classChannelChat : ${classChannelChats}" class="self-start mb-10">
+                                <div class="rounded-2xl rounded-tl-none bg-main-grey p-4 mb-1">
+                                    <p th:text="${classChannelChat.message}"></p>
+                                </div>
+                                <p class="" th:text="${classChannelChat.getFormattedTime()}"></p>
+                            </div>
+                            <div th:if="${param.class_channel_id != null and classChannelChats.size() == 0}"
+                                class="flex flex-col items-center justify-center h-full">
+                                <p class="text-center">No Message</p>
+                            </div>
+
+                            <!-- Ormawa Channel Chat -->
+                            <div th:if="${param.ormawa_channel_id != null}"
+                                th:each="ormawaChannelChat : ${ormawaChannelChats}" class="self-start mb-10">
+                                <div class="rounded-2xl rounded-tl-none bg-main-grey p-4 mb-1">
+                                    <p th:text="${ormawaChannelChat.message}"></p>
+                                </div>
+                                <p class="text-left">9.23 AM</p>
+                            </div>
+                            <div th:if="${param.ormawa_channel_id != null and ormawaChannelChats.size() == 0}"
+                                class="flex flex-col items-center justify-center h-full">
+                                <p class="text-center">No Message</p>
+                            </div>
+
+                            <!-- Perconal Chat -->
+                            <div th:if="${param.user_id != null and personalChats.size() > 0}"
+                                th:each="personalChat : ${personalChats}" class="mb-10"
+                                th:classappend="${#strings.equals(personalChat.getReceiver().getId(), param.user_id)} ? 'self-end text-right' : 'self-start text-left'">
+                                <div class="rounded-2xl rounded-tl-none bg-main-grey p-4 mb-1">
+                                    <p th:text="${personalChat.message}"></p>
+                                </div>
+                                <p class="" th:text="${personalChat.getFormattedTime()}"></p>
+                            </div>
+                            <div th:if="${param.user_id != null and personalChats.size() == 0}"
+                                class="flex flex-col items-center justify-center h-full">
+                                <p class="text-center">No Message</p>
+                            </div>
+
+                            <!-- Message Input Field -->
+                            <form th:if="${is_able_to_chat}" action="/chat" method="post"
+                                class="flex items-center justify-between w-full">
+                                <input th:if="${param.user_id != null}" type="text" name="user_id"
+                                    th:value="${param.user_id}" hidden>
+                                <input th:if="${param.group_id != null}" type="text" name="group_id"
+                                    th:value="${param.group_id}" hidden>
+                                <input th:if="${param.class_channel_id != null}" type="text" name="class_channel_id"
+                                    th:value="${param.class_channel_id}" hidden>
+                                <input th:if="${param.ormawa_channel_id != null}" type="text" name="ormawa_channel_id"
+                                    th:value="${param.ormawa_channel_id}" hidden>
+                                <input name="message" type="text" placeholder="Enter Your Message"
+                                    class="message text-black p-7 bg-[#F2F2F2] w-full rounded-3xl mr-4 focus:outline-none">
+                                <!-- <input type="text" name="group_id" th:value="${param.class_channel_id != null ? param.class_channel_id : param.ormawa_channel_id}" hidden> -->
+                                <button type="submit" id="sendMessage" onclick="send()"
+                                    class="flex items-center justify-center bg-[#F2F2F2] h-full p-4 px-6 rounded-2xl">
+                                    <img src="../../assets/icon/send.png" alt="send" class="hover:scale-110">
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="grid grid-cols-4 gap-x-4 gap-y-6">
                   <!-- Class Items -->

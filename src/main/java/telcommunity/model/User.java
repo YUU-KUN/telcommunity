@@ -45,8 +45,8 @@ public class User {
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
     private List<UserChat> userChats;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private KetuaOrmawa ketuaOrmawa;
+    // @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    // private KetuaOrmawa ketuaOrmawa;
 
     public String getId() {
         return id;
@@ -112,13 +112,13 @@ public class User {
         this.dosen = dosen;
     }
 
-    public KetuaOrmawa getKetuaOrmawa() {
-        return ketuaOrmawa;
-    }
+    // public KetuaOrmawa getKetuaOrmawa() {
+    //     return ketuaOrmawa;
+    // }
 
-    public void setKetuaOrmawa(KetuaOrmawa ketuaOrmawa) {
-        this.ketuaOrmawa = ketuaOrmawa;
-    }
+    // public void setKetuaOrmawa(KetuaOrmawa ketuaOrmawa) {
+    //     this.ketuaOrmawa = ketuaOrmawa;
+    // }
 
     
 }
