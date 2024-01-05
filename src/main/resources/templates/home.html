@@ -70,17 +70,52 @@
                         <div class="flex flex-col items-center justify-start h-full">
                             <div
                                 class="flex items-center justify-between w-full mb-6 bg-gradient-to-b from-primary to-dark-red px-7 py-3 rounded-full">
-                                <p class="text-white text-20">Recently Chatted</p>
+                                <p class="text-white text-20"
+                                    th:text="${'SUPERADMIN'.equals(user.getRole()) ? 'Ketua Ormawa Requests' : 'Recently Chatted'}">
+                                </p>
                                 <img src="/assets/icon/option.png" alt="option">
                             </div>
                             <div class="px-7 w-full">
                                 <!-- Recent Chat Card -->
-                                <a th:href="${'chat?user_id=' + recentChat.getReceiver().getId()}" th:each="recentChat : ${recentChats}" class="flex items-center justify-start w-full mb-7">
+                                <a th:href="${'chat?user_id=' + recentChat.getReceiver().getId()}"
+                                    th:each="recentChat : ${recentChats}"
+                                    class="flex items-center justify-start w-full mb-7">
                                     <img src="/assets/img/groups/telu.png" alt="telu" class="shadow rounded-full mr-2">
                                     <div class="py-7 rounded-3xl shadow text-center w-full">
-                                        <p class="font-bold text-20" th:text="${recentChat.getReceiver().getName()}"></p>
+                                        <p class="font-bold text-20" th:text="${recentChat.getReceiver().getName()}">
+                                        </p>
                                     </div>
                                 </a>
+
+                                <!-- Ormawa Request Card -->
+                                <div th:each="requestKetuaOrmawa : ${requestKetuaOrmawas}"
+                                    class="flex items-center justify-start w-full mb-7">
+                                    <img th:src="${requestKetuaOrmawa.getOrmawa().getLogo()}" alt="telu"
+                                        class="shadow rounded-full mr-2">
+                                    <div
+                                        class="flex items-center justify-between rounded-3xl shadow text-left w-full p-5">
+                                        <div class="mb-0">
+                                            <p class="font-bold text-20"
+                                                th:text="${requestKetuaOrmawa.getOrmawa().getKetuaOrmawa().getUser().getName()}">
+                                            </p>
+                                            <p class="font-medium text-16"
+                                                th:text="'as Ketua' + ${requestKetuaOrmawa.getOrmawa().getOrmawa_name()}">
+                                            </p>
+                                        </div>
+                                        <div class="flex items-center justify-center">
+
+                                            <a class="mr-1 cursor-pointer"
+                                                th:href="@{/set-ketua-ormawa(ketua_ormawa_id=${requestKetuaOrmawa.id}, action='decline')}">
+                                                <img src="/assets/icon/decline.png" alt="decline">
+                                            </a>
+                                            <a th:href="@{/set-ketua-ormawa(ketua_ormawa_id=${requestKetuaOrmawa.id}, action='approve')}"
+                                                class="cursor-pointer">
+                                                <img src="/assets/icon/approve.png" alt="approve">
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -178,8 +213,94 @@
                     </div>
                 </div>
             </div>
+            <div class="col-span-2">
+                <div class="bg-white rounded-3xl shadow shadow-pink h-full">
+                    <div class="flex flex-col items-center justify-start h-full p-9">
+                        <div class="flex items-center justify-start px-3 shadow rounded-3xl w-full py-2 px-3 mb-9">
+                            <div class="p-1 rounded-full bg-gradient-to-b from-red to-orange mr-7">
+                                <img th:src="@{/assets/img/nav-profile.png}" alt="nav-profile">
+                            </div>
+                            <div>
+                                <p class="font-bold text-20", th:text="${user.getName()}"></p>
+                                <p class="font-bold text-16", th:text="${user.getRole()}"></p>
+                            </div>
+                        </div>
+
+                        <!-- Current Mahasiswa Detail -->
+                        <div th:if="${#strings.equals(user.getRole, 'MAHASISWA')}"
+                            class="flex flex-col items-center justify-start px-3 shadow rounded-3xl w-full py-2 px-3 mb-9">
+                            <p class="font-bold text-24 mb-2">Profile</p>
+                            <div class="flex flex-col items-center justify-start h-full w-full">
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Nama</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${user.getName()}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">NIM</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${nim_mhs}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Kelas</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${kelas_mhs}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Jurusan</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${jurusan_mhs}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Fakultas</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${fakultas_mhs}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Angkatan</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${angkatan_mhs}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Current DOSEN Detail -->
+                        <div th:if="${#strings.equals(user.getRole, 'DOSEN')}"
+                            class="flex flex-col items-center justify-start px-3 shadow rounded-3xl w-full py-2 px-3 mb-9">
+                            <p class="font-bold text-24 mb-2">Profile</p>
+                            <div class="flex flex-col items-center justify-start h-full w-full">
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Nama</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${user.getName()}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Gelar</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" value="S.T., M.Kom.">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">NIP</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${nip_dsn}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Kode</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${kode_dsn}">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Fakultas</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" value="Informatika">
+                                </div>
+                                <div class="flex items-center justify-between w-full mb-7">
+                                    <p class="font-bold text-20">Thn Msk</p>
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1" value="2018">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script th:inline="javascript">
+        function __redirect(url) {
+            window.location.href = url;
+        }
+    </script>
+
 </body>
 
 </html>

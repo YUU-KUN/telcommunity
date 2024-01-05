@@ -49,14 +49,18 @@
                     <p class="text-white text-40 font-bold w-full text-center">Helpdesk TelCommunity</p>
                     <img src="/assets/icon/option.png" alt="option">
                 </div>
-                <div th:if="${param.confirmation == null}" class="flex flex-col items-center justify-center mx-auto my-auto">
-                    <a href="/helpdesk?confirmation=1" class="rounded-full text-center text-white bg-primary text-40 w-[700px] py-5 mb-12">Konfirmasi Ketua Ormawa</a>
-                    <a href="https://wa.me/+6281358282255" target="_blank" class="text-center rounded-full text-white bg-green-500 text-40 w-[700px] py-5">Hubungi Kami</a>
+                <div th:if="${param.confirmation == null}"
+                    class="flex flex-col items-center justify-center mx-auto my-auto">
+                    <a href="/helpdesk?confirmation=1"
+                        class="rounded-full text-center text-white bg-primary text-40 w-[700px] py-5 mb-12">Konfirmasi
+                        Ketua Ormawa</a>
+                    <a href="https://wa.me/+6281358282255" target="_blank"
+                        class="text-center rounded-full text-white bg-green-500 text-40 w-[700px] py-5">Hubungi Kami</a>
                 </div>
 
                 <div th:if="${param.confirmation}" class="flex flex-col items-stretch justify-between h-full w-full">
                     <form action="/helpdesk" method="post" class="flex flex-col items-center justify-between h-full">
-                        <div class="flex flex-col items-center justify-start w-full">
+                        <!-- <div class="flex flex-col items-center justify-start w-full">
                             <div class="flex flex-col items-start justify-start mb-10 w-full">
                                 <label for="ormawa_name" class="font-medium text-36 mb-5">Nama Ormawa :</label>
                                 <input name="ormawa_name" id="ormawa_name" type="text" class="rounded-full shadow text-32 shadow-red-500 w-[566px] h-[80px] px-4">
@@ -65,8 +69,17 @@
                                 <label for="category" class="font-medium text-36 mb-5">Kategori :</label>
                                 <input name="category" id="category" type="text" class="rounded-full shadow text-32 shadow-red-500 w-[566px] h-[80px] px-4">
                             </div>
+                        </div> -->
+                        <div class="flex flex-col items-center justify-start w-full">
+                            <label for="ormawa" class="font-medium text-36 mb-5">Pilih Ormawa :</label>
+                            <select name="ormawa_id" id="ormawa" class="shadow text-32 shadow-red-500 w-[566px] h-[80px] px-4">
+                                <option value="" selected disabled>Silahkan pilih Ormawa</option>
+                                <option th:each="ormawa : ${ormawas}" th:text="${ormawa.getOrmawa_name()}" th:value="${ormawa.getId()}"></option>
+                            </select>
                         </div>
-                        <button type="submit" class="rounded-full bg-primary text-white font-normal text-24 w-[400px] h-[80px] py-5 mx-auto">Konfirmasi</button>
+
+                        <button type="submit"
+                            class="rounded-full bg-primary text-white font-normal text-24 w-[400px] h-[80px] py-5 mx-auto">Konfirmasi</button>
                     </form>
                 </div>
 

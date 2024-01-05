@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telcommunity</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/tailwind.js}"></script>
+    
+</head>
+
+<body>
+    <div class="flex justify-center items-center h-screen w-screen p-7">
+        <img th:src="@{/assets/logo/telu-logo.png}" alt="telu-logo"
+            class="absolute top-0 left-0 z-10 ml-[33px] mt-[33px]">
+        <img th:src="@{/assets/img/bg-login.png}" alt="bg-login" class="w-screen h-screen absolute top-0 left-0 -z-10">
+        <div class="flex flex-col items-center justify-center">
+            <div class="font-bold text-60 text-center text-grey mb-16">
+                <p>Welcome Admin!</p>
+            </div>
+            <div class="flex flex-col items-center justify-center bg-[#D96C6C] w-[666px] rounded-3xl py-9 px-12 font-medium mb-10">
+                <div class="flex items-end justify-center w-full px-7">
+                    <!-- <p th:text="${param.role}"></p> -->
+                    <!-- <p th:if="${#strings.equals(param.role, 'mahasiswa')}">halo</p> -->
+                    <a th:href="@{/login?role=mahasiswa}" th:classappend="${#strings.equals(param.role, 'mahasiswa')} ? 'text-primary text-30' : 'text-grey text-20'" class="bg-white w-full text-center rounded-[20px] rounded-b-none p-4">
+                        Mahasiswa
+                    </a>
+                    <a th:href="@{/login?role=dosen}" th:classappend="${#strings.equals(param.role, 'dosen')} ? 'text-primary text-30' : 'text-grey text-20'" class="bg-white w-full text-center rounded-[20px] rounded-b-none p-4">
+                        Dosen
+                    </a>
+                </div>
+                <form action="/login" method="post" class="flex flex-col items-center justify-center w-full p-[63px] bg-primary rounded-[30px]">
+                    <p class="text-white font-medium text-30 text-left w-full mb-[86px]">Login</p>
+                    <input autofocus name="username" type="text" placeholder="Username SSO" class="bg-transparent p-4 text-20 border-b-4 border-b-[#FE8787] p-3 w-full text-white mb-[65px] focus:outline-none">
+                    <input name="password" type="password" placeholder="Password" class="bg-transparent p-4 text-20 border-b-4 border-b-[#FE8787] p-3 w-full text-white mb-[81px] focus:outline-none">
+                    <button type="submit" class="bg-white py-6 w-full rounded-lg text-primary font-medium text-30">Masuk</button>
+                </form>
+            </div>
+            <p class="text-30">Butuh bantuan?</p>
+        </div>
+    </div>
+</body>
+
+</html>

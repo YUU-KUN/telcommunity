@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import telcommunity.model.ClassChannelChat;
 import telcommunity.model.Group;
 import telcommunity.model.GroupChat;
 import telcommunity.repository.GroupRepository;
