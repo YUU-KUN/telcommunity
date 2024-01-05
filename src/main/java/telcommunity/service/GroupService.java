@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 
 import telcommunity.model.Group;
 import telcommunity.model.GroupChat;
+import telcommunity.repository.GroupChatRepository;
 import telcommunity.repository.GroupRepository;
 
 @Service
 public class GroupService {
     @Autowired
     GroupRepository groupRepository;
+
+    @Autowired
+    GroupChatRepository groupChatRepository;
 
     public List<Group> getAllGroup() {
         try {
@@ -47,6 +51,14 @@ public class GroupService {
     public void saveOrUpdate(Group group) {
         try {
             groupRepository.save(group);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addGroupChat(GroupChat groupChat) {
+        try {
+            groupChatRepository.save(groupChat);
         } catch (Exception e) {
             e.printStackTrace();
         }

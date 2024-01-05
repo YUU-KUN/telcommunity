@@ -96,10 +96,10 @@
                                         class="flex items-center justify-between rounded-3xl shadow text-left w-full p-5">
                                         <div class="mb-0">
                                             <p class="font-bold text-20"
-                                                th:text="${requestKetuaOrmawa.getOrmawa().getKetuaOrmawa().getUser().getName()}">
+                                                th:text="${requestKetuaOrmawa.getUser().getName()}">
                                             </p>
                                             <p class="font-medium text-16"
-                                                th:text="'as Ketua' + ${requestKetuaOrmawa.getOrmawa().getOrmawa_name()}">
+                                                th:text="'as Ketua ' + ${requestKetuaOrmawa.getOrmawa().getOrmawa_name()}">
                                             </p>
                                         </div>
                                         <div class="flex items-center justify-center">

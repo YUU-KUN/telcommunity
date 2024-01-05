@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -17,7 +18,7 @@ public class UserOrmawaChannel {
     @JoinColumn(name = "user_id", nullable = false)
     private User user; //mahasiswa
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "ormawa_channel_id", nullable = false)
     private OrmawaChannel ormawaChannel;
 
