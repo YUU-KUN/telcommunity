@@ -63,6 +63,8 @@ class MainController {
             User user = userRepository.findByUsername(username);
             model.addAttribute("user", user);
 
+            
+
             List<Group> groups = groupService.getAllGroup();
             List<UserOrmawaChannel> userOrmawaChannels = userOrmawaChannelService.getUserOrmawaChannels();
             if ("MAHASISWA".equals(user.getRole())) {
@@ -72,12 +74,23 @@ class MainController {
                 List<UserChat> recentChats = userChatService.getRecentChats();
                 model.addAttribute("recentChats", recentChats);
 
+                //Mahasiswa Stuff
+                model.addAttribute("nim_mhs", user.getMahasiswa().getNim());
+                model.addAttribute("kelas_mhs", user.getMahasiswa().getKelas());
+                model.addAttribute("jurusan_mhs", user.getMahasiswa().getJurusan());
+                model.addAttribute("angkatan_mhs", user.getMahasiswa().getAngkatan());
+                model.addAttribute("fakultas_mhs", user.getMahasiswa().getFakultas());
+
             } else if ("DOSEN".equals(user.getRole())) {
                 List<ClassChannel> dosenClassChannels = channelService.getDosenClassChannels();
                 model.addAttribute("dosenClassChannels", dosenClassChannels);
 
                 List<UserChat> recentChats = userChatService.getRecentChats();
                 model.addAttribute("recentChats", recentChats);
+
+                //Dosen Stuff
+                model.addAttribute("nip_dsn", user.getDosen().getNip());
+                model.addAttribute("kode_dsn", user.getDosen().getKode());
             } else { // SUPER ADMIN
                 List<KetuaOrmawa> requestKetuaOrmawas = ormawaService.getRequestKetuaOrmawas();
                 model.addAttribute("requestKetuaOrmawas", requestKetuaOrmawas);
