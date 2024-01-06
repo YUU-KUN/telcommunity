@@ -8,13 +8,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import telcommunity.model.Channel;
 import telcommunity.model.ClassChannel;
 import telcommunity.model.ClassChannelChat;
 import telcommunity.model.OrmawaChannel;
 import telcommunity.model.OrmawaChannelChat;
 import telcommunity.model.User;
-import telcommunity.repository.ChannelRepository;
 import telcommunity.repository.ClassChannelChatRepository;
 import telcommunity.repository.ClassChannelRepository;
 import telcommunity.repository.OrmawaChannelRepository;
@@ -25,9 +23,6 @@ import telcommunity.repository.OrmawaChannelChatRepository;
 public class ChannelService {
     @Autowired
     UserRepository userRepository;
-    
-    @Autowired
-    ChannelRepository channelRepository;
 
     @Autowired
     OrmawaChannelRepository ormawaChannelRepository;
@@ -40,13 +35,6 @@ public class ChannelService {
 
     @Autowired
     ClassChannelChatRepository classChannelChatRepository;
-
-
-    public List<Channel> getAllChannel() {
-        List<Channel> channels = new ArrayList<Channel>();
-        channelRepository.findAll().forEach(channel -> channels.add(channel));
-        return channels;
-    }
 
 
     // Ormawa Channel
