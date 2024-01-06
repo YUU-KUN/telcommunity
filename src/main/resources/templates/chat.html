@@ -194,7 +194,7 @@
                                     <p class="text-left">9.23 AM</p>
                                 </div>
                                 <div th:if="${param.class_channel_id != null and classChannelChats.size() == 0}"
-                                    class="flex flex-col items-center justify-center h-full">
+                                    class="flex flex-col items-center justify-center h-full w-full">
                                     <p class="text-center">No Message</p>
                                 </div>
 
@@ -207,7 +207,7 @@
                                     <p class="text-left">9.23 AM</p>
                                 </div>
                                 <div th:if="${param.group_id != null and groupChats.size() == 0}"
-                                    class="flex flex-col items-center justify-center h-full">
+                                    class="flex flex-col items-center justify-center h-full w-full">
                                     <p class="text-center">No Message</p>
                                 </div>
 
@@ -221,7 +221,7 @@
                                     <p class="" th:text="${personalChat.getFormattedTime()}"></p>
                                 </div>
                                 <div th:if="${param.user_id != null and personalChats.size() == 0}"
-                                    class="flex flex-col items-center justify-center h-full">
+                                    class="flex flex-col items-center justify-center h-full w-full">
                                     <p class="text-center">No Message</p>
                                 </div>
                             </div>

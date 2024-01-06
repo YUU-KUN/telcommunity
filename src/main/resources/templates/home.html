@@ -65,13 +65,13 @@
                         </div>
                     </div>
                 </div>
-                <div th:classappend="${'DOSEN'.equals(user.getRole())} ? 'row-span-2' : ''" class="h-full">
+                <div th:unless="${'SUPERADMIN'.equals(user.getRole())}" class="h-full row-span-2">
                     <div class="bg-white rounded-3xl p-2 shadow shadow-pink h-full">
                         <div class="flex flex-col items-center justify-start h-full">
                             <div
                                 class="flex items-center justify-between w-full mb-6 bg-gradient-to-b from-primary to-dark-red px-7 py-3 rounded-full">
-                                <p class="text-white text-20"
-                                    th:text="${'SUPERADMIN'.equals(user.getRole()) ? 'Ketua Ormawa Requests' : 'Recently Chatted'}">
+                                <p class="text-white text-20">
+                                    Recently Chatted
                                 </p>
                                 <img src="/assets/icon/option.png" alt="option">
                             </div>
@@ -86,7 +86,20 @@
                                         </p>
                                     </div>
                                 </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div th:if="${'SUPERADMIN'.equals(user.getRole())}" class="h-full">
+                    <div class="bg-white rounded-3xl p-2 shadow shadow-pink h-full">
+                        <div class="flex flex-col items-center justify-start h-full">
+                            <div
+                                class="flex items-center justify-between w-full mb-6 bg-gradient-to-b from-primary to-dark-red px-7 py-3 rounded-full">
+                                <p class="text-white text-20">Ketua Ormawa Requests</p>
+                                <img src="/assets/icon/option.png" alt="option">
+                            </div>
+                            <div class="px-7 w-full">
                                 <!-- Ormawa Request Card -->
                                 <div th:each="requestKetuaOrmawa : ${requestKetuaOrmawas}"
                                     class="flex items-center justify-start w-full mb-7">
@@ -114,6 +127,31 @@
                                             </a>
 
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${'SUPERADMIN'.equals(user.getRole())}" class="h-full">
+                    <div class="bg-white rounded-3xl p-2 shadow shadow-pink h-full">
+                        <div class="flex flex-col items-center justify-start h-full">
+                            <div
+                                class="flex items-center justify-between w-full mb-6 bg-gradient-to-b from-primary to-dark-red px-7 py-3 rounded-full">
+                                <p class="text-white text-20">Existing Groups</p>
+                                <img src="/assets/icon/option.png" alt="option">
+                            </div>
+                            <div class="px-7 w-full">
+                                <!-- Ormawa Request Card -->
+                                <div th:each="existinGroup : ${existinGroups}"
+                                    class="flex items-center justify-start w-full mb-7">
+                                    <img th:src="${existinGroup.getLogo()}" alt="telu"
+                                        class="shadow rounded-full mr-2">
+                                    <div
+                                        class="flex items-center justify-between rounded-3xl shadow text-left w-full p-5">
+                                        <p class="font-bold text-20"
+                                            th:text="${existinGroup.getGroup_name()}">
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +202,17 @@
                                         <p class="font-medium text-16" th:text="${dosenClassChannel.getClass_name()}">
                                         </p>
                                     </a>
-                                    <a href="/add-class">
+                                    <a th:if="${#strings.equals(user.getRole, 'SUPERADMIN')}"
+                                        th:href="@{/chat(class_channel_id=${classChannel.getId()})}"
+                                        th:each="classChannel : ${classChannels}"
+                                        class="flex flex-col items-center justify-start text-center hover:cursor-pointer">
+                                        <div class="bg-gradient-to-b from-orange to-red rounded-full p-[3px] mb-2">
+                                            <img th:src="${classChannel.getLogo()}" alt="" class="h-[70px] w-[70px]">
+                                        </div>
+                                        <p class="font-medium text-16" th:text="${classChannel.getClass_name()}">
+                                        </p>
+                                    </a>
+                                    <a th:unless="${#strings.equals(user.getRole, 'SUPERADMIN')}" href="/add-class">
                                         <div
                                             class="flex flex-col items-center justify-start text-center cursor-pointer">
                                             <div class="bg-gradient-to-b from-orange to-red rounded-full p-[3px] mb-2">
@@ -180,14 +228,15 @@
                             </div>
 
                             <!-- Ormawa -->
-                            <div th:if="${#strings.equals(user.getRole, 'MAHASISWA')}" class="w-full">
+                            <div th:unless="${#strings.equals(user.getRole, 'DOSEN')}" class="w-full">
                                 <div class="w-full mb-6">
                                     <p class="text-secondary-grey font-bold text-24 mx-2">ORMAWA</p>
                                     <hr class="w-full border-2">
                                 </div>
                                 <div class="grid grid-cols-5 gap-x-4 gap-y-6">
                                     <!-- Ormawa Item -->
-                                    <a th:href="@{/chat(ormawa_channel_id=${userOrmawaChannel.getOrmawaChannel().getId()})}"
+                                    <a th:if="${#strings.equals(user.getRole, 'MAHASISWA')}"
+                                        th:href="@{/chat(ormawa_channel_id=${userOrmawaChannel.getOrmawaChannel().getId()})}"
                                         th:each="userOrmawaChannel : ${userOrmawaChannels}"
                                         class="flex flex-col items-center justify-start text-center hover:cursor-pointer">
                                         <div class="bg-gradient-to-b from-orange to-red rounded-full p-[3px] mb-2">
@@ -197,7 +246,18 @@
                                         <p class="font-medium text-16"
                                             th:text="${userOrmawaChannel.getOrmawaChannel().getChannel_name()}"></p>
                                     </a>
-                                    <a href="/add-ormawa" class="flex flex-col items-center justify-start text-center">
+                                    <a th:if="${#strings.equals(user.getRole, 'SUPERADMIN')}"
+                                        th:href="@{/chat(ormawa_channel_id=${ormawaChannel.getId()})}"
+                                        th:each="ormawaChannel : ${ormawaChannels}"
+                                        class="flex flex-col items-center justify-start text-center hover:cursor-pointer">
+                                        <div class="bg-gradient-to-b from-orange to-red rounded-full p-[3px] mb-2">
+                                            <img th:src="${ormawaChannel.getOrmawa().getLogo()}" alt=""
+                                                class="h-[70px] w-[70px]">
+                                        </div>
+                                        <p class="font-medium text-16" th:text="${ormawaChannel.getChannel_name()}"></p>
+                                    </a>
+                                    <a th:unless="${#strings.equals(user.getRole, 'SUPERADMIN')}" href="/add-ormawa"
+                                        class="flex flex-col items-center justify-start text-center">
                                         <div class="bg-gradient-to-b from-orange to-red rounded-full p-[3px] mb-2">
                                             <div
                                                 class="rounded-full bg-white flex items-center justify-center h-[70px] w-[70px]">
@@ -221,8 +281,8 @@
                                 <img th:src="@{/assets/img/nav-profile.png}" alt="nav-profile">
                             </div>
                             <div>
-                                <p class="font-bold text-20", th:text="${user.getName()}"></p>
-                                <p class="font-bold text-16", th:text="${user.getRole()}"></p>
+                                <p class="font-bold text-20" , th:text="${user.getName()}"></p>
+                                <p class="font-bold text-16" , th:text="${user.getRole()}"></p>
                             </div>
                         </div>
 
@@ -233,27 +293,33 @@
                             <div class="flex flex-col items-center justify-start h-full w-full">
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">Nama</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${user.getName()}">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
+                                        th:value="${user.getName()}">
                                 </div>
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">NIM</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${nim_mhs}">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
+                                        th:value="${nim_mhs}">
                                 </div>
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">Kelas</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${kelas_mhs}">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
+                                        th:value="${kelas_mhs}">
                                 </div>
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">Jurusan</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${jurusan_mhs}">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
+                                        th:value="${jurusan_mhs}">
                                 </div>
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">Fakultas</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${fakultas_mhs}">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
+                                        th:value="${fakultas_mhs}">
                                 </div>
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">Angkatan</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${angkatan_mhs}">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
+                                        th:value="${angkatan_mhs}">
                                 </div>
                             </div>
                         </div>
@@ -265,23 +331,28 @@
                             <div class="flex flex-col items-center justify-start h-full w-full">
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">Nama</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${user.getName()}">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
+                                        th:value="${user.getName()}">
                                 </div>
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">Gelar</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1" value="S.T., M.Kom.">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
+                                        value="S.T., M.Kom.">
                                 </div>
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">NIP</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${nip_dsn}">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
+                                        th:value="${nip_dsn}">
                                 </div>
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">Kode</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1" th:value="${kode_dsn}">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
+                                        th:value="${kode_dsn}">
                                 </div>
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">Fakultas</p>
-                                    <input type="text" class="rounded-full border border-2 px-4 py-1" value="Informatika">
+                                    <input type="text" class="rounded-full border border-2 px-4 py-1"
+                                        value="Informatika">
                                 </div>
                                 <div class="flex items-center justify-between w-full mb-7">
                                     <p class="font-bold text-20">Thn Msk</p>
