@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class UserClassChannel {
@@ -13,11 +13,11 @@ public class UserClassChannel {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user; //mahasiswa
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "class_channel_id", nullable = false)
     private ClassChannel classChannel;
 
