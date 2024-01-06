@@ -8,17 +8,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import telcommunity.model.ClassChannel;
 import telcommunity.model.Group;
 import telcommunity.model.KetuaOrmawa;
 import telcommunity.model.Ormawa;
+import telcommunity.model.OrmawaChannel;
 import telcommunity.model.User;
 import telcommunity.model.UserChat;
 import telcommunity.model.UserClassChannel;
@@ -94,6 +91,15 @@ class MainController {
             } else { // SUPER ADMIN
                 List<KetuaOrmawa> requestKetuaOrmawas = ormawaService.getRequestKetuaOrmawas();
                 model.addAttribute("requestKetuaOrmawas", requestKetuaOrmawas);
+
+                List<ClassChannel> classChannels = channelService.getClassChannels();
+                model.addAttribute("classChannels", classChannels);
+
+                List<OrmawaChannel> ormawa_channels = channelService.getOrmawaChannels();
+                model.addAttribute("ormawaChannels", ormawa_channels);
+
+                List<Group> existinGroups = groupService.getAllGroup();
+                model.addAttribute("existinGroups", existinGroups);
             }
             model.addAttribute("userOrmawaChannels", userOrmawaChannels);
             model.addAttribute("groups", groups);

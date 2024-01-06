@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import telcommunity.model.Mahasiswa;
 import telcommunity.model.User;
-import telcommunity.repository.UserRepository;
 import telcommunity.service.CustomUserDetailsService;
 import telcommunity.service.MahasiswaService;
 
