@@ -78,13 +78,17 @@ public class ChannelController {
 
     @PostMapping("/add-class")
     public String addClass(@RequestParam(name = "channel_name") String channel_name) {
+        System.out.println(channel_name);
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
             User authenticatedUser = userRepository.findByUsername(username);
     
             ClassChannel classChannel = new ClassChannel();
-            classChannel.setClass_name("New Class");
+            classChannel.setClass_name(channel_name);
+            if ("".equals(channel_name)) {
+                classChannel.setClass_name("New Class");
+            }
             classChannel.setDosen(authenticatedUser.getDosen());
             classChannel.setLogo("/assets/img/groups/telu.png");
             channelService.addClassChannel(classChannel);
